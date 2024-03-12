@@ -13,11 +13,11 @@
                 <img class="icon1" src="/img/icon2.png">
                 <p class="title1">BookSpace</p>
               </div>
-              <img src="/img/profpic.png" class="profpic">
+              <img th:src="${img}" class="profpic">
               <h2 style="text-align: center; margin-bottom: 50px;"  th:text="${user.nickname}">username</h2>
-              <a href="homePage.html" style="text-decoration: none; color: #000000"><h2 class="section">Home page</h2></a>
-              <a href="myLib.html" style="text-decoration: none; color: #000000"><h2 class="section">My library</h2></a>
-              <a href="explore.html" style="text-decoration: none; color: #000000"><h2 class="section">New books</h2></a>
+              <a href="/homePage" style="text-decoration: none; color: #000000"><h2 class="section">Home page</h2></a>
+              <a href="/myLib" style="text-decoration: none; color: #000000"><h2 class="section">My library</h2></a>
+              <a href="/explore" style="text-decoration: none; color: #000000"><h2 class="section">New books</h2></a>
               <div class="dropdown1">
                 <button class="dropbtn1"><h2 class="section" style="margin-top: 0px; margin-bottom: 0px;">Contact Us</h2></button>
                 <div class="dropdown-content1">
@@ -42,11 +42,11 @@
                   <h1 style="margin-bottom: 5px;">Little women</h1>
                   <h2 style="margin-top: 0px;">Louisa May Alcott</h2>
                   <div class="rating">
-                    <img class="star" src="../static/img/yellow-star.png">
-                    <img class="star" src="../static/img/yellow-star.png">
-                    <img class="star" src="../static/img/yellow-star.png">
-                    <img class="star" src="../static/img/yellow-star.png">
-                    <img class="star" src="../static/img/yellow-star.png">
+                    <img class="star" src="/img/yellow-star.png">
+                    <img class="star" src="/img/yellow-star.png">
+                    <img class="star" src="/img/yellow-star.png">
+                    <img class="star" src="/img/yellow-star.png">
+                    <img class="star" src="/img/yellow-star.png">
                   </div>
                   <p style="width: 500px; word-wrap: break-word; ">Four sisters and their mother, whom they call Marmee, live in a new neighborhood (loosely based on Concord) in Massachusetts in genteel poverty. Having lost all his money, their father is serving as a chaplain for the Union Army in the American Civil War, far from home. The mother and daughters face their first Christmas without him. When Marmee asks her daughters to give their Christmas breakfast away to an impoverished family, the girls and their mother venture into town laden with baskets to feed the hungry children.</p>
                   <a href="book.html"><button type="button" class="moreButton" style="margin-top: 0px; margin-left:  200px;">More</button></a>
@@ -56,15 +56,15 @@
                 <h1>Explore new books</h1>
                 <div class="books-to-explore" style="display: flex; width: 700px; overflow-wrap: break-word;">
                   <div class="book" style="margin-right: 50px;">
-                    <img src="../static/img/The_Fault_in_Our_Stars.jpg" style="width: 160px; height: 220px;">
+                    <img src="/img/The_Fault_in_Our_Stars.jpg" style="width: 160px; height: 220px;">
                     <h3 style="margin-top: 0px; margin-bottom: 0px; height: 50px;">The fault in our stars</h3>
                     <h4 style="margin-top: 0px; margin-bottom: 3px;">John Green</h4>
                     <div class="rating">
-                      <img class="star" src="../static/img/yellow-star.png">
-                      <img class="star" src="../static/img/yellow-star.png">
-                      <img class="star" src="../static/img/yellow-star.png">
-                      <img class="star" src="../static/img/yellow-star.png">
-                      <img class="star" src="../static/img/gray-star.png">
+                      <img class="star" src="/img/yellow-star.png">
+                      <img class="star" src="/img/yellow-star.png">
+                      <img class="star" src="/img/yellow-star.png">
+                      <img class="star" src="/img/yellow-star.png">
+                      <img class="star" src="/img/gray-star.png">
                     </div>
                     <a href="book.html"><button type="button" class="moreButton">More</button></a>
                   </div>
@@ -168,14 +168,14 @@
               </div>
             </div>
             <div class="dropdown">
-                <button class="dropbtn"><img src="../static/img/profpic.png" style="width: 50px; height: 50px;"></button>
+                <button class="dropbtn"><img th:src="${img}" style="width: 50px; height: 50px;"></button>
                 <div class="dropdown-content">
                   <a href="#">Dark mode</a>
-                  <a href="myLib.html">Library</a>
-                  <a href="logIn.html">Log out</a>
+                  <a href="/myLib">Library</a>
+                  <a href="/login">Log out</a>
                 </div>
             </div>
-            <img src="../static/img/hello2.png" style="position: absolute; width: 250px; height: 320px; margin-left: 1200px; margin-top: 120px;">
+            <img src="/img/hello2.png" style="position: absolute; width: 250px; height: 320px; margin-left: 1200px; margin-top: 120px;">
         </div>
     </body>
 </html>

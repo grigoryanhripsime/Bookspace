@@ -37,17 +37,4 @@ public class LoginController {
             return "error";
         }
     }
-
-    @GetMapping("/homePage")
-    public String showHomePage(Model model, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-
-        if (user != null) {
-            model.addAttribute("user", user);
-            // Add any additional information to the model that you want to display on the home page
-            return "homePage";
-        } else {
-            return "error";
-        }
-    }
 }
