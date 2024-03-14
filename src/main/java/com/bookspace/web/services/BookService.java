@@ -1,6 +1,8 @@
 package com.bookspace.web.services;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -8,29 +10,27 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Service
 public class BookService {
 
-    private final String GOOGLE_BOOKS_API_URL = "https://www.googleapis.com/books/v1/volumes";
-    private final String API_KEY;
-
     private final RestTemplate restTemplate;
 
-    public BookService(RestTemplate restTemplate, @Value("${google.books.api.key}") String apiKey) {
+    public BookService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
-        this.API_KEY = apiKey;
     }
 
-    public String searchBooks(String query) {
-        // Build the URL for the Google Books API search endpoint
-        String apiUrl = UriComponentsBuilder.fromUriString(GOOGLE_BOOKS_API_URL)
-                .queryParam("q", query)
-                .queryParam("key", API_KEY)
-                .toUriString();
+    public void printBooksByAuthor(String author) {
+        String apiUrl = "https://openlibrary.org/search.json?author=" + author;
 
-        // Make the GET request and return the response as a String
-        return restTemplate.getForObject(apiUrl, String.class);
+        try {
+            ResponseEntity<String> responseEntity = restTemplate.getForEntity(apiUrl, String.class);
+
+            if (responseEntity.getStatusCode() == HttpStatus.OK) {
+                String jsonResponse = responseEntity.getBody();
+                System.out.println(jsonResponse); // Print JSON response
+            } else {
+                System.out.println("Error: " + responseEntity.getStatusCode());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error occurred during the request: " + e.getMessage());
+        }
     }
-
-    // Add more methods to interact with the Google Books API as needed
-
 }
-
-
