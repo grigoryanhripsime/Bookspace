@@ -1,10 +1,14 @@
 package com.bookspace.web.controllers;
 
 import com.bookspace.web.models.Book;
+import com.bookspace.web.models.User;
 import com.bookspace.web.services.BookService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,21 +16,21 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/search")
 public class BookController {
-
     private final BookService bookService;
-    private List<Book> books = new ArrayList<>();
+    private List<Book> books;
+
 
     @Autowired
     public BookController(BookService bookService) {
         this.bookService = bookService;
     }
-
     @GetMapping("/bySubject")
-    private void searchBooksBySubject(String subject) {
+    private String searchBooksBySubject(String subject, HttpSession session) {
         System.out.println("This is search by subject, and the subject is: " + subject);
+        books = new ArrayList<>();
         String jsonResponse = bookService.getBooksBySubject(subject);
 
         // Parse the JSON string into a JSON object
@@ -39,11 +43,13 @@ public class BookController {
             System.out.println("Error occurred during JSON parsing: " + e.getMessage());
         }
         System.out.println("Search was ended");
-        books.clear();
+        session.setAttribute("books", books);
+        return "redirect:/searchResults";
     }
 
     @GetMapping("/byAuthor")
-    private void searchBooksByAuthor(String author) {
+    private String searchBooksByAuthor(String author, HttpSession session) {
+        books = new ArrayList<>();
         System.out.println("This is search by author, and the author is: " + author);
         String jsonResponse = bookService.getBooksByAuthor(author);
 
@@ -57,11 +63,13 @@ public class BookController {
             System.out.println("Error occurred during JSON parsing: " + e.getMessage());
         }
         System.out.println("Search was ended");
-        books.clear();
+        session.setAttribute("books", books);
+        return "redirect:/searchResults";
     }
 
     @GetMapping("/byTitle")
-    private void searchBooksByTitle(String title) {
+    private String searchBooksByTitle(String title, HttpSession session) {
+        books = new ArrayList<>();
         System.out.println("This is search by title, and the title is: " + title);
         String jsonResponse = bookService.getBooksByTitle(title);
 
@@ -75,7 +83,8 @@ public class BookController {
             System.out.println("Error occurred during JSON parsing: " + e.getMessage());
         }
         System.out.println("Search was ended");
-        books.clear();
+        session.setAttribute("books", books);
+        return "redirect:/searchResults";
     }
 
     private void getBooks(JsonNode jsonNode) {
@@ -119,16 +128,21 @@ public class BookController {
                 book.setRating(doc.get("ratings_average").asLong());
             }
 
+            // Set first_pub_date if available
+            if (doc.has("first_publish_year")) {
+                book.setFirst_pub_year(doc.get("first_publish_year").asInt());
+            }
+
+            // Set subjects if available
+            if (doc.has("language") && doc.get("language").isArray()) {
+                for (JsonNode languageNode : doc.get("language")) {
+                    book.setLanguage(languageNode.asText());
+                }
+            }
             // Add the book to the list
             books.add(book);
         }
-        printBooks();
-    }
-
-
-    private void printBooks(){
-        for(Book book : books)
-        {
+        for (Book book : books) {
             System.out.println(book);
         }
     }

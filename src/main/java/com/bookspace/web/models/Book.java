@@ -22,10 +22,10 @@ public class Book {
     //private long id;
     private String title;
     private List<String> authors = new ArrayList<>();
-    private LocalDateTime pub_date;
+    private int first_pub_year;
     private String img;
-    private String description;
     private List<String> subject = new ArrayList<>();
+    private List<String> language = new ArrayList<>();
     private float rating;
 
     public void setAuthors(String author) {
@@ -33,6 +33,9 @@ public class Book {
     }
     public void setSubject(String subject) {
         this.subject.add(subject);
+    }
+    public void setLanguage(String language) {
+        this.language.add(language);
     }
 }
 

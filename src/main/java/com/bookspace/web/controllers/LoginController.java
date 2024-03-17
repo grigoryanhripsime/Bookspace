@@ -23,7 +23,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String processLogin(@RequestParam String email, @RequestParam String password, Model model, HttpSession session) {
+    public String processLogin(@RequestParam String email, @RequestParam String password, HttpSession session) {
         if (email.isEmpty() || password.isEmpty()) {
             return "error";
         }

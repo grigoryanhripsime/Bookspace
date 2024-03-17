@@ -15,7 +15,7 @@ public class BookService {
     }
 
     public String getBooksByAuthor(String author) {
-        String apiUrl = "https://openlibrary.org/search.json?author=" + author;
+        String apiUrl = "https://openlibrary.org/search.json?limit=25&author=" + author;
 
         try {
             ResponseEntity<String> responseEntity = restTemplate.getForEntity(apiUrl, String.class);
@@ -34,7 +34,7 @@ public class BookService {
         return (null);
     }
     public String getBooksByTitle(String title) {
-        String apiUrl = "https://openlibrary.org/search.json?title=" + title;
+        String apiUrl = "https://openlibrary.org/search.json?limit=25&title=" + title;
 
         try {
             ResponseEntity<String> responseEntity = restTemplate.getForEntity(apiUrl, String.class);
@@ -53,7 +53,7 @@ public class BookService {
         return (null);
     }
     public String getBooksBySubject(String subject) {
-        String apiUrl = "https://openlibrary.org/search.json?subject=" + subject;
+        String apiUrl = "https://openlibrary.org/search.json?limit=25&subject=" + subject;
 
         try {
             ResponseEntity<String> responseEntity = restTemplate.getForEntity(apiUrl, String.class);
