@@ -52,7 +52,7 @@ public class BookService {
         }
         return (null);
     }
-    public String getBooksByGenre(String subject) {
+    public String getBooksBySubject(String subject) {
         String apiUrl = "https://openlibrary.org/search.json?subject=" + subject;
 
         try {

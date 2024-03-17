@@ -6,11 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-
-
 
 @RestController
 @RequestMapping("/search")
@@ -23,24 +19,11 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @GetMapping
-    public void searchBooks(@RequestParam(required = false) String author, @RequestParam(required = false) String title, @RequestParam(required = false) String subject) {
-        if (author != null && !author.isEmpty()) {
-            searchBooksByAuthor(author);
-        } else if (title != null && !title.isEmpty()) {
-            searchBooksByTitle(title);
-        }else if (subject != null && !subject.isEmpty()) {
-                searchBooksByGenre(subject);
-        } else {
-            System.out.println("Neither author nor title specified for search.");
-        }
-    }
-    //search is ready for use
-    private void searchBooksByGenre(String subject) {
+    @GetMapping("/bySubject")
+    private void searchBooksBySubject(String subject) {
         System.out.println("This is search by genre");
-        String jsonResponse = bookService.getBooksByGenre(subject);
+        String jsonResponse = bookService.getBooksBySubject(subject);
 
-        int i = 0;
         // Parse the JSON string into a JSON object
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -65,7 +48,6 @@ public class BookController {
                                 }
 
                             }
-                            i++;
                         }
                     }
                 }
@@ -74,14 +56,14 @@ public class BookController {
             e.printStackTrace();
             System.out.println("Error occurred during JSON parsing: " + e.getMessage());
         }
-        System.out.println("i = " + i);
+        System.out.println("Search was ended");
     }
 
+    @GetMapping("/byAuthor")
     private void searchBooksByAuthor(String author) {
         System.out.println("This is search by author");
         String jsonResponse = bookService.getBooksByAuthor(author);
 
-        int i = 0;
         // Parse the JSON string into a JSON object
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -90,9 +72,7 @@ public class BookController {
             // Iterate over the elements in the "docs" array
             if (jsonNode.has("docs") && jsonNode.get("docs").isArray()) {
                 for (JsonNode doc : jsonNode.get("docs")) {
-                    // Check if the element has the key "author_name" with value "Agatha Christie"
                     if (doc.has("author_name") && doc.get("author_name").isArray()) {
-
                         for (JsonNode authorNode : doc.get("author_name")) {
                             if (authorNode.asText().equals(author)) {
                                 // Check if the element has the keys "title" and "author_name"
@@ -101,7 +81,6 @@ public class BookController {
                                     System.out.println("title: " + doc.get("title").asText() + ", author: " + authorNode.asText());
                                 }
                             }
-                            i++;
                         }
                     }
                 }
@@ -110,14 +89,14 @@ public class BookController {
             e.printStackTrace();
             System.out.println("Error occurred during JSON parsing: " + e.getMessage());
         }
-        System.out.println("i = " + i);
+        System.out.println("Search was ended");
     }
 
+    @GetMapping("/byTitle")
     private void searchBooksByTitle(String title) {
         System.out.println("This is search by title");
         String jsonResponse = bookService.getBooksByTitle(title);
 
-        int i = 0;
         // Parse the JSON string into a JSON object
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -135,7 +114,6 @@ public class BookController {
                                     // Print the title and the author
                                     System.out.println("title: " + doc.get("title").asText() + ", author: " + authorNode.asText());
                                 }
-                            i++;
                         }
                     }
                 }
@@ -144,6 +122,6 @@ public class BookController {
             e.printStackTrace();
             System.out.println("Error occurred during JSON parsing: " + e.getMessage());
         }
-        System.out.println("i = " + i);
+        System.out.println("Search was ended");
     }
 }

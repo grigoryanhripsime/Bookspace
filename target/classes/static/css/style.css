@@ -1,0 +1,242 @@
+body {
+    margin: 0px;
+    display: flex;
+}
+.purpleOne {
+    display: inline-block;
+    width: 899px;
+    height: 707px;
+    background-color: #AAB2CD;
+}
+.logIn {
+    display: grid;
+    place-items: center;
+    padding-top: 100px;
+}
+.welcome {
+    font-size: 36px;
+}
+.welcomesignIn {
+    margin-top: -30px;
+    font-size: 36px;
+}
+.email, .password, .nick {
+    font-size: 20px;
+    margin-left: -300px;
+    margin-bottom: 5px;
+}
+.confpassword {
+    font-size: 20px;
+    margin-left: -200px;
+    margin-bottom: 5px;
+}
+.emailInput, .passwordInput, .nickInput, .confpasswordInput, .search {
+    width: 400px;
+    height: 40px;
+    border-radius: 18px;
+    background: #D9D9D9;
+    font-size: 20px;
+    padding-left: 20px;
+    border: none;
+}
+#customCheckbox{
+    transform: scale(1.5);
+    display: inline;
+    border: none;
+    margin-left: -360px;
+    margin-top: 20px;
+}
+#label {
+    margin-top: -20px;
+    margin-left: -200px;
+}
+.logInButton, .searchButton, .moreButton, .getButton, .saveButton {
+    width: 150px;
+    height: 35px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 18px;
+    background: #D9D9D9;
+}
+.logInButton:hover, .searchButton:hover,.moreButton:hover, .getButton:hover {
+    background-color: #b5acc2;
+}
+.whiteOne {
+    width: 640px;
+    height: 707px;
+}
+.icon {
+    margin-top: -10px;
+    width: 170px;
+    height: 120px;
+}
+.title {
+    padding-top: 10px;
+    margin-left: -20px;
+    font-size: 26px;
+}
+.astronaut {
+    width:600px;
+    height: 600px;
+}
+.astronaut_balloons  {
+    width:630px;
+    height: 680px;
+}
+.profpic {
+    display: block;
+    width: 120px;
+    height: 120px;
+    //margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.section {
+    text-align: center;
+}
+.searchform{
+    width: 1000px;
+    margin-left: 50px;
+    display: flex;
+}
+.search{
+    margin-right: 30px;
+    margin-top: 15px;
+    width: 500px;
+    background-color: #E4E4E4;
+}
+.searchButton {
+    background-color: #BABFF2;
+    font-size: 16px;
+}
+#selection{
+    width: 100px;
+    height: 30px;
+    border: none;
+    margin-top: 20px;
+    text-align: center;
+    margin-right: 30px;
+    border-radius: 18px;
+    background: #BABFF2;
+    font-size: 16px;
+}
+.dropdown{
+    position: absolute;
+    margin-left: 1350px;
+    width: 100px;
+    height: 100px;
+}
+.dropbtn {
+  background-color: #FFFFFF;
+  width: 50px;
+  height: 50px;
+  margin-top: 20px;
+  border: none;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  background-color: #ddd;
+}
+.dropdown-content a:hover {
+    background-color: #b5acc2;
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+.dropdown1{
+    position: absolute;
+    margin-left: 50px;
+    width: 100px;
+    height: 30px;
+}
+.dropbtn1 {
+  background-color: #D4DCF8;
+  width: 200px;
+  border: none;
+
+}
+.dropdown-content1 {
+  display: none;
+  margin-left: 30px;
+  position: absolute;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.dropdown-content1 a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  background-color: #ddd;
+}
+.dropdown-content1 a:hover {
+    background-color: #b5acc2;
+}
+.dropdown1:hover .dropdown-content1 {
+    display: block;
+}
+.icon1 {
+    width: 120px;
+    height: 80px;
+}
+.title1 {
+    padding-top: 0px;
+    margin-left: -20px;
+    font-size: 26px;
+}
+.ads{
+    display: flex;
+    background-color: #FFFFFF;
+    height: 350px;
+    margin-left: 60px;;
+}
+.rating{
+    display: flex;
+}
+.star{
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+.explore, .my-lib{
+    margin-left: 100px;
+}
+.books-to-explore, .book {
+    display: inline-block;
+}
+.book {
+    width: 160px;
+    margin-bottom: 40px;
+}
+.book-overview {
+    display: flex;
+    width: 1000px;
+    margin-left: 100px;
+}
+.get, .reviews {
+    width: 1000px;
+    margin-left: 100px;
+}
+.getButton {
+    margin-top: 0px;
+}
+.saveButton{
+    margin-left: 20px;
+    margin-top: 25px;
+    width: 100px;
+    background-color: #BABFF2;
+}
+.saveButton:active {
+    background-color: #D9D9D9;
+}
