@@ -1,11 +1,9 @@
 package com.bookspace.web.services;
 
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 @Service
 public class BookService {
@@ -16,7 +14,7 @@ public class BookService {
         this.restTemplate = restTemplate;
     }
 
-    public void printBooksByAuthor(String author) {
+    public String getBooksByAuthor(String author) {
         String apiUrl = "https://openlibrary.org/search.json?author=" + author;
 
         try {
@@ -24,7 +22,8 @@ public class BookService {
 
             if (responseEntity.getStatusCode() == HttpStatus.OK) {
                 String jsonResponse = responseEntity.getBody();
-                System.out.println(jsonResponse); // Print JSON response
+                //System.out.println(jsonResponse); // Print JSON response
+                return (jsonResponse);
             } else {
                 System.out.println("Error: " + responseEntity.getStatusCode());
             }
@@ -32,5 +31,44 @@ public class BookService {
             e.printStackTrace();
             System.out.println("Error occurred during the request: " + e.getMessage());
         }
+        return (null);
+    }
+    public String getBooksByTitle(String title) {
+        String apiUrl = "https://openlibrary.org/search.json?title=" + title;
+
+        try {
+            ResponseEntity<String> responseEntity = restTemplate.getForEntity(apiUrl, String.class);
+
+            if (responseEntity.getStatusCode() == HttpStatus.OK) {
+                String jsonResponse = responseEntity.getBody();
+                //System.out.println(jsonResponse); // Print JSON response
+                return (jsonResponse);
+            } else {
+                System.out.println("Error: " + responseEntity.getStatusCode());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error occurred during the request: " + e.getMessage());
+        }
+        return (null);
+    }
+    public String getBooksByGenre(String subject) {
+        String apiUrl = "https://openlibrary.org/search.json?subject=" + subject;
+
+        try {
+            ResponseEntity<String> responseEntity = restTemplate.getForEntity(apiUrl, String.class);
+
+            if (responseEntity.getStatusCode() == HttpStatus.OK) {
+                String jsonResponse = responseEntity.getBody();
+                //System.out.println(jsonResponse); // Print JSON response
+                return (jsonResponse);
+            } else {
+                System.out.println("Error: " + responseEntity.getStatusCode());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error occurred during the request: " + e.getMessage());
+        }
+        return (null);
     }
 }
