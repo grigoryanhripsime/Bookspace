@@ -1,10 +1,13 @@
 package com.bookspace.web.controllers;
 
 import com.bookspace.web.models.User;
+import com.bookspace.web.scrapers.OpenLibraryScraper;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class HomePageController {
@@ -16,10 +19,18 @@ public class HomePageController {
         if (user != null) {
             model.addAttribute("user", user);
             model.addAttribute("img", "/img/" + images[user.getImg() - 1]);
+            model.addAttribute("books", OpenLibraryScraper.bookScraper());
             // Add any additional information to the model that you want to display on the home page
             return "homePage";
         } else {
             return "error";
         }
+    }
+    @PostMapping("/generalSearch")
+    public String generalSearch(@RequestParam String search)
+    {
+        search = search.replace(" ", "+");
+        System.out.println("Search by: " + search);
+        return "redirect:/search/general?query=" + search;
     }
 }

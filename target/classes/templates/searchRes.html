@@ -46,12 +46,16 @@
                 <!-- Loop over the list of books -->
                 <div th:each="book : ${books}" class="book" style="margin-right: 50px;">
                     <img th:src="${book.img}" style="width: 160px; height: 220px;">
-                    <h3 th:text="${book.title}" style="margin-top: 0px; margin-bottom: 0px; height: 50px; word-wrap: break-word;"></h3>
-                    <h4 th:if="${not #lists.isEmpty(book.authors)}" th:text="${book.authors[0]}" style="margin-top: 0px; margin-bottom: 3px;"></h4>
+                    <h3 th:text="${#strings.length(book.title) > 33 ? #strings.substring(book.title, 0, 30) + '...' : book.title}" style="margin-top: 0px; margin-bottom: 0px; height: 50px; word-wrap: break-word;"></h3>
+                    <h4 th:if="${not #lists.isEmpty(book.authors)}" th:text="${#strings.length(book.authors[0]) > 15 ? #strings.substring(book.authors[0], 0, 15) + '...' : book.authors[0]}" style="margin-top: 0px; margin-bottom: 3px;"></h4>
                     <!-- Assuming you have a rating property in your Book class -->
                     <div class="rating">
-                        <img class="star" th:each="star : ${#numbers.sequence(1, book.rating)}" src="/img/yellow-star.png">
-                        <img class="star" th:each="star : ${#numbers.sequence(book.rating + 1, 5)}" src="/img/gray-star.png">
+                        <th:block th:if="${book.rating > 0}" th:each="starIndex : ${#numbers.sequence(1, book.rating)}">
+                            <img class="star" src="/img/yellow-star.png">
+                        </th:block>
+                        <th:block th:if="${book.rating < 5}" th:each="starIndex : ${#numbers.sequence(book.rating + 1, 5)}">
+                            <img class="star" src="/img/gray-star.png">
+                        </th:block>
                     </div>
                     <a href="book.html"><button type="button" class="moreButton">More</button></a>
                 </div>

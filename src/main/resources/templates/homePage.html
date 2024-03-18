@@ -30,9 +30,9 @@
             </div>
             <div class="center-div" style="margin-left: 300px;">
               <div class="search-div" style="margin-left: 50px; margin-top: 10px;">
-                <form class="searchform">
+                <form class="searchform" method="post" action="\generalSearch">
                   <input type="text" name="search" class="search" placeholder="Search">
-                  <button type="button" class="searchButton">Let's go</button>
+                  <input type="submit" class="searchButton" value="Search">
                 </form>
               </div>
               <h1 style="margin-left: 100px; margin-bottom: 0px;">Book of the day</h1>
@@ -53,73 +53,14 @@
                 </div>
               </div>
               <div class="explore">
-                <h1>Explore new books</h1>
+                <a style="color: #000000" href="/explore"><h1>Explore new books</h1></a>
                 <div class="books-to-explore" style="display: flex; width: 700px; overflow-wrap: break-word;">
-                  <div class="book" style="margin-right: 50px;">
-                    <img src="/img/The_Fault_in_Our_Stars.jpg" style="width: 160px; height: 220px;">
-                    <h3 style="margin-top: 0px; margin-bottom: 0px; height: 50px;">The fault in our stars</h3>
-                    <h4 style="margin-top: 0px; margin-bottom: 3px;">John Green</h4>
-                    <div class="rating">
-                      <img class="star" src="/img/yellow-star.png">
-                      <img class="star" src="/img/yellow-star.png">
-                      <img class="star" src="/img/yellow-star.png">
-                      <img class="star" src="/img/yellow-star.png">
-                      <img class="star" src="/img/gray-star.png">
+                    <div  th:each="book, iterStat : ${books}" class="book" style="margin-right: 50px;" th:if="${iterStat.index lt 5}">
+                        <img th:src="${book.img}" style="width: 160px; height: 220px;">
+                        <h3 th:text="${#strings.length(book.title) > 33 ? #strings.substring(book.title, 0, 30) + '...' : book.title}" style="margin-top: 0px; margin-bottom: 0px; height: 50px; word-wrap: break-word;"></h3>
+                        <h4 th:if="${not #lists.isEmpty(book.authors)}" th:text="${#strings.length(book.authors[0]) > 15 ? #strings.substring(book.authors[0], 0, 15) + '...' : book.authors[0]}" style="margin-top: 0px; margin-bottom: 3px;"></h4>
+                        <a href="book.html"><button type="button" class="moreButton">More</button></a>
                     </div>
-                    <a href="book.html"><button type="button" class="moreButton">More</button></a>
-                  </div>
-                  <div class="book" style="margin-right: 50px;">
-                    <img src="../static/img/Little-women.jpg" style="width: 160px; height: 220px;">
-                    <h3 style="margin-top: 0px; margin-bottom: 0px; height: 50px;">Little women</h3>
-                    <h4 style="margin-top: 0px; margin-bottom: 3px;">Louisa May Alcott</h4>
-                    <div class="rating">
-                      <img class="star" src="../static/img/yellow-star.png">
-                      <img class="star" src="../static/img/yellow-star.png">
-                      <img class="star" src="../static/img/yellow-star.png">
-                      <img class="star" src="../static/img/yellow-star.png">
-                      <img class="star" src="../static/img/yellow-star.png">
-                    </div>
-                    <a href="book.html"><button type="button" class="moreButton">More</button></a>
-                  </div>
-                  <div class="book" style="margin-right: 50px;">
-                    <img src="../static/img/the-perks-of-being-a-wallflowe.jpg" style="width: 160px; height: 220px;">
-                    <h3 style="margin-top: 0px; margin-bottom: 0px; height: 50px;">The perks of being wallflower</h3>
-                    <h4 style="margin-top: 0px; margin-bottom: 3px;">Stephen Chbosky</h4>
-                    <div class="rating">
-                      <img class="star" src="../static/img/yellow-star.png">
-                      <img class="star" src="../static/img/yellow-star.png">
-                      <img class="star" src="../static/img/yellow-star.png">
-                      <img class="star" src="../static/img/yellow-star.png">
-                      <img class="star" src="../static/img/gray-star.png">
-                    </div>
-                    <a href="book.html"><button type="button" class="moreButton">More</button></a>
-                  </div>
-                  <div class="book" style="margin-right: 50px;">
-                    <img src="../static/img/pride_and_prejudice.jpg" style="width: 160px; height: 220px;">
-                    <h3 style="margin-top: 0px; margin-bottom: 0px; height: 50px;">Pride and Prejudice</h3>
-                    <h4 style="margin-top: 0px; margin-bottom: 3px;">Jane Austen</h4>
-                    <div class="rating">
-                      <img class="star" src="../static/img/yellow-star.png">
-                      <img class="star" src="../static/img/yellow-star.png">
-                      <img class="star" src="../static/img/yellow-star.png">
-                      <img class="star" src="../static/img/yellow-star.png">
-                      <img class="star" src="../static/img/gray-star.png">
-                    </div>
-                    <a href="book.html"><button type="button" class="moreButton">More</button></a>
-                  </div>
-                  <div class="book" style="margin-right: 50px;">
-                    <img src="../static/img/abc_murders.jpg" style="width: 160px; height: 220px;">
-                    <h3 style="margin-top: 0px; margin-bottom: 0px; height: 50px;">The A.B.C. Murders</h3>
-                    <h4 style="margin-top: 0px; margin-bottom: 3px;">Agatha Christie</h4>
-                    <div class="rating">
-                      <img class="star" src="../static/img/yellow-star.png">
-                      <img class="star" src="../static/img/yellow-star.png">
-                      <img class="star" src="../static/img/yellow-star.png">
-                      <img class="star" src="../static/img/yellow-star.png">
-                      <img class="star" src="../static/img/gray-star.png">
-                    </div>
-                    <a href="book.html"><button type="button" class="moreButton">More</button></a>
-                  </div>
                 </div>
               </div>
               <div class="my-lib">
