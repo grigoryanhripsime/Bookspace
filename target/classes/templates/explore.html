@@ -48,7 +48,10 @@
           <img th:src="${book.img}" style="width: 160px; height: 220px;">
           <h3 th:text="${#strings.length(book.title) > 33 ? #strings.substring(book.title, 0, 30) + '...' : book.title}" style="margin-top: 0px; margin-bottom: 0px; height: 50px; word-wrap: break-word;"></h3>
           <h4 th:if="${not #lists.isEmpty(book.authors)}" th:text="${#strings.length(book.authors[0]) > 15 ? #strings.substring(book.authors[0], 0, 15) + '...' : book.authors[0]}" style="margin-top: 0px; margin-bottom: 3px;"></h4>
-          <a href="book.html"><button type="button" class="moreButton">More</button></a>
+          <form method="post" action="/details">
+            <input type="hidden" name="openLibId" th:value="${book.openLibId}"> <!-- Accessing links based on index -->
+            <input type="submit" class="moreButton" value="More">
+          </form>
         </div>
       </div>
     </div>
