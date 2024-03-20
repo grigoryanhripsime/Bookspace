@@ -1,59 +1,119 @@
 package com.bookspace.web.scrapers;
 
 import com.bookspace.web.models.Book;
+import jakarta.servlet.http.HttpSession;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.ui.Model;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OpenLibraryScraper {
+    public static List<Book> trendingBookScraper(HttpSession session) {
+        List<Book> books = new ArrayList<>();
 
-    static List<Book> books;
-    public static List<Book> bookScraper() {
-        books = new ArrayList<>();
         try {
-            Document doc = Jsoup.connect("https://openlibrary.org/trending/daily?page=1").get();
-            Elements bookElements = doc.select(".searchResultItem");
+            for (int i = 1; i < 5; i++)
+            {
+                String url = "https://openlibrary.org/trending/daily?page=" + i;
+                Document doc = Jsoup.connect(url).get();
 
-            for (Element bookElement : bookElements) {
-                Book book = new Book();
-                Elements title_info = bookElement.select(".booktitle");
-                book.setTitle(title_info.select(".results").text());
+                Elements bookElements = doc.select(".searchResultItem");
 
-                Elements author_info = bookElement.select(".bookauthor");
-                book.setAuthors(author_info.select(".results").text());
+                for (Element bookElement : bookElements) {
+                    Book book = new Book();
+                    Elements title_info = bookElement.select(".booktitle");
+                    book.setTitle(title_info.select(".results").text());
 
-                Element imgElement = bookElement.select("span.bookcover img").first();
-                book.setImg(imgElement.attr("src"));
+                    Elements author_info = bookElement.select(".bookauthor");
+                    book.setAuthors(author_info.select(".results").text());
 
-                books.add(book);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            Document doc = Jsoup.connect("https://openlibrary.org/trending/daily?page=2").get();
-            Elements bookElements = doc.select(".searchResultItem");
+                    Element imgElement = bookElement.select("span.bookcover img").first();
+                    book.setImg(imgElement.attr("src"));
 
-            for (Element bookElement : bookElements) {
-                Book book = new Book();
-                Elements title_info = bookElement.select(".booktitle");
-                book.setTitle(title_info.select(".results").text());
+                    Element bookIdElement = bookElement.select("span.bookcover a").first();
+                    String link = bookIdElement.attr("href").substring(7);
 
-                Elements author_info = bookElement.select(".bookauthor");
-                book.setAuthors(author_info.select(".results").text());
+                    if (link.indexOf('?') > 0)
+                        link = link.substring(0, link.indexOf('?'));
+                    book.setOpenLibId(link);
 
-                Element imgElement = bookElement.select("span.bookcover img").first();
-                book.setImg(imgElement.attr("src"));
-
-                books.add(book);
+                    books.add(book);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
         return (books);
+    }
+
+    public static Book bookScrapper(String link) {
+        Book book = new Book();
+        try {
+            String url = "https://openlibrary.org/works/" + link;
+            Document doc = Jsoup.connect(url).get();
+
+            //openLibId
+            book.setOpenLibId(link);
+
+            //img link
+            Element imgElement = doc.select(".bookCover a").first();
+            String img = "https://" + imgElement.attr("href").substring(2);
+            book.setImg(img);
+
+            //title
+            Element titleElement = doc.select(".work-title").first();
+            String title = titleElement.text();
+            book.setTitle(title);
+
+            //author
+            Element authorElement = doc.select(".edition-byline").first();
+            for (Element authors : authorElement.select("a")) {
+                String author = authors.text();
+                book.setAuthors(author);
+            }
+
+            //pub_date
+            Element p_dateElement = doc.select(".edition-omniline-item span").first();
+            String pub_date = p_dateElement.text();
+            book.setPub_date(pub_date);
+
+            //publisher
+            Element pubElement = doc.select(".edition-omniline-item a").first();
+            String publisher = pubElement.text();
+            book.setPublisher(publisher);
+
+            //description
+            Element descElement = doc.select(".read-more__content p").first();
+            String description = descElement.text();
+            book.setDescription(description);
+
+            //subjects
+            for (Element subjects : doc.select(".clamp a")) {
+                String subject = subjects.text();
+                book.setSubject(subject);
+            }
+
+            //language
+            Element langElement = doc.select("span[itemprop=\"inLanguage\"] a").first();
+            String language = null;
+            if (langElement != null)
+                language = langElement.text();
+            book.setLanguage(language);
+
+            //available
+            //This part needs to be done
+
+            //rating
+            Element ratingElement = doc.select(".avg-ratings span[itemprop=ratingValue]").first();
+            book.setRating((int) Float.parseFloat(ratingElement.text()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return book;
     }
 }

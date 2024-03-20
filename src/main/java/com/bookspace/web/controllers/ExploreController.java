@@ -22,8 +22,8 @@ public class ExploreController {
         if (user != null) {
             model.addAttribute("user", user);
             model.addAttribute("img", "/img/" + images[user.getImg() - 1]);
-            model.addAttribute("books", OpenLibraryScraper.bookScraper());
-            // Add any additional information to the model that you want to display on the home page
+            model.addAttribute("books", OpenLibraryScraper.trendingBookScraper(session));
+            model.addAttribute("link", session.getAttribute("link"));
             return "explore";
         } else {
             return "error";

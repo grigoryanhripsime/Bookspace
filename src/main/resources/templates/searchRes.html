@@ -57,7 +57,10 @@
                             <img class="star" src="/img/gray-star.png">
                         </th:block>
                     </div>
-                    <a href="book.html"><button type="button" class="moreButton">More</button></a>
+                    <form method="post" action="/details">
+                        <input type="hidden" name="openLibId" th:value="${book.openLibId}"> <!-- Accessing links based on index -->
+                        <input type="submit" class="moreButton" value="More">
+                    </form>
                 </div>
             </div>
         </div>

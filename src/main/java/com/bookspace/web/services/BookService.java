@@ -15,7 +15,7 @@ public class BookService {
     }
 
     public String getBooksGeneral(String query) {
-        String apiUrl = "https://openlibrary.org/search.json?limit=25&q=" + query;
+        String apiUrl = "https://openlibrary.org/search.json?limit=20&q=" + query;
 
         try {
             ResponseEntity<String> responseEntity = restTemplate.getForEntity(apiUrl, String.class);

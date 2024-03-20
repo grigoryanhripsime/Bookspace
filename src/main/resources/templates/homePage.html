@@ -49,17 +49,22 @@
                     <img class="star" src="/img/yellow-star.png">
                   </div>
                   <p style="width: 500px; word-wrap: break-word; ">Four sisters and their mother, whom they call Marmee, live in a new neighborhood (loosely based on Concord) in Massachusetts in genteel poverty. Having lost all his money, their father is serving as a chaplain for the Union Army in the American Civil War, far from home. The mother and daughters face their first Christmas without him. When Marmee asks her daughters to give their Christmas breakfast away to an impoverished family, the girls and their mother venture into town laden with baskets to feed the hungry children.</p>
-                  <a href="book.html"><button type="button" class="moreButton" style="margin-top: 0px; margin-left:  200px;">More</button></a>
+                  <a href="bookDetails.html"><button type="button" class="moreButton" style="margin-top: 0px; margin-left:  200px;">More</button></a>
                 </div>
               </div>
               <div class="explore">
                 <a style="color: #000000" href="/explore"><h1>Explore new books</h1></a>
                 <div class="books-to-explore" style="display: flex; width: 700px; overflow-wrap: break-word;">
-                    <div  th:each="book, iterStat : ${books}" class="book" style="margin-right: 50px;" th:if="${iterStat.index lt 5}">
-                        <img th:src="${book.img}" style="width: 160px; height: 220px;">
-                        <h3 th:text="${#strings.length(book.title) > 33 ? #strings.substring(book.title, 0, 30) + '...' : book.title}" style="margin-top: 0px; margin-bottom: 0px; height: 50px; word-wrap: break-word;"></h3>
-                        <h4 th:if="${not #lists.isEmpty(book.authors)}" th:text="${#strings.length(book.authors[0]) > 15 ? #strings.substring(book.authors[0], 0, 15) + '...' : book.authors[0]}" style="margin-top: 0px; margin-bottom: 3px;"></h4>
-                        <a href="book.html"><button type="button" class="moreButton">More</button></a>
+                    <div class="books-to-explore" style="display: flex; width: 700px; overflow-wrap: break-word;">
+                        <div th:each="book, iterStat : ${books}" class="book" style="margin-right: 50px;" th:if="${iterStat.index lt 5}">
+                            <img th:src="${book.img}" style="width: 160px; height: 220px;">
+                            <h3 th:text="${#strings.length(book.title) > 33 ? #strings.substring(book.title, 0, 30) + '...' : book.title}" style="margin-top: 0px; margin-bottom: 0px; height: 50px; word-wrap: break-word;"></h3>
+                            <h4 th:if="${not #lists.isEmpty(book.authors)}" th:text="${#strings.length(book.authors[0]) > 15 ? #strings.substring(book.authors[0], 0, 15) + '...' : book.authors[0]}" style="margin-top: 0px; margin-bottom: 3px;"></h4>
+                            <form method="post" action="/details">
+                                <input type="hidden" name="openLibId" th:value="${book.openLibId}"> <!-- Accessing links based on index -->
+                                <input type="submit" class="moreButton" value="More">
+                            </form>
+                        </div>
                     </div>
                 </div>
               </div>
@@ -77,7 +82,7 @@
                       <img class="star" src="../static/img/yellow-star.png">
                       <img class="star" src="../static/img/gray-star.png">
                     </div>
-                    <a href="book.html"><button type="button" class="moreButton">More</button></a>
+                    <a href="bookDetails.html"><button type="button" class="moreButton">More</button></a>
                   </div>
                   <div class="book" style="margin-right: 50px;">
                     <img src="../static/img/The_Fault_in_Our_Stars.jpg" style="width: 160px; height: 220px;">
@@ -90,7 +95,7 @@
                       <img class="star" src="../static/img/yellow-star.png">
                       <img class="star" src="../static/img/gray-star.png">
                     </div>
-                    <a href="book.html"><button type="button" class="moreButton">More</button></a>
+                    <a href="bookDetails.html"><button type="button" class="moreButton">More</button></a>
                   </div>
                   <div class="book" style="margin-right: 50px;">
                     <img src="../static/img/Inferno.jpg" style="width: 160px; height: 220px;">
@@ -103,7 +108,7 @@
                       <img class="star" src="../static/img/yellow-star.png">
                       <img class="star" src="../static/img/gray-star.png">
                     </div>
-                    <a href="book.html"><button type="button" class="moreButton">More</button></a>
+                    <a href="bookDetails.html"><button type="button" class="moreButton">More</button></a>
                   </div>
                 </div>
               </div>

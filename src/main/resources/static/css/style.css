@@ -232,9 +232,9 @@ body {
     margin-top: 0px;
 }
 .saveButton{
-    margin-left: 20px;
+    margin-left: 50px;
     margin-top: 25px;
-    width: 100px;
+    width: 150px;
     background-color: #BABFF2;
 }
 .saveButton:active {
