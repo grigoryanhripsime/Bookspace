@@ -51,14 +51,14 @@ public class OpenLibraryScraper {
         return (books);
     }
 
-    public static Book bookScrapper(String link) {
+    public static Book detailedBookScrapper(String openLibId) {
         Book book = new Book();
         try {
-            String url = "https://openlibrary.org/works/" + link;
+            String url = "https://openlibrary.org/works/" + openLibId;
             Document doc = Jsoup.connect(url).get();
 
             //openLibId
-            book.setOpenLibId(link);
+            book.setOpenLibId(openLibId);
 
             //img link
             Element imgElement = doc.select(".bookCover a").first();
@@ -111,6 +111,37 @@ public class OpenLibraryScraper {
             //rating
             Element ratingElement = doc.select(".avg-ratings span[itemprop=ratingValue]").first();
             book.setRating((int) Float.parseFloat(ratingElement.text()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return book;
+    }
+
+    public static Book bookScrapper(String openLibId) {
+        Book book = new Book();
+        try {
+            String url = "https://openlibrary.org/works/" + openLibId;
+            Document doc = Jsoup.connect(url).get();
+
+            //openLibId
+            book.setOpenLibId(openLibId);
+
+            //img link
+            Element imgElement = doc.select(".bookCover a").first();
+            String img = "https://" + imgElement.attr("href").substring(2);
+            book.setImg(img);
+
+            //title
+            Element titleElement = doc.select(".work-title").first();
+            String title = titleElement.text();
+            book.setTitle(title);
+
+            //author
+            Element authorElement = doc.select(".edition-byline").first();
+            for (Element authors : authorElement.select("a")) {
+                String author = authors.text();
+                book.setAuthors(author);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

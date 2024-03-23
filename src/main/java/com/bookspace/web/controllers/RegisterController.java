@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class UserController {
+public class RegisterController {
 
     @Autowired
     private UserRepository userRepository;
@@ -22,7 +22,7 @@ public class UserController {
     public String registerUser(User user, Model model) {
         // Validate the form data (you can add validation logic here)
         if (user.getNickname().isEmpty() || user.getEmail().isEmpty() || user.getPassword().isEmpty()) {
-            return "error"; // Return to the registration page with an error message
+            return "error";
         }
 
         // Save the user to the database

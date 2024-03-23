@@ -5,7 +5,7 @@ body {
 .purpleOne {
     display: inline-block;
     width: 899px;
-    height: 707px;
+    height: 697px;
     background-color: #AAB2CD;
 }
 .logIn {
@@ -52,8 +52,8 @@ body {
 }
 .logInButton, .searchButton, .moreButton, .getButton, .saveButton {
     width: 150px;
-    height: 35px;
-    margin-top: 20px;
+    height: 30px;
+    margin-top: 00px;
     border: none;
     border-radius: 18px;
     background: #D9D9D9;
@@ -78,6 +78,7 @@ body {
 .astronaut {
     width:600px;
     height: 600px;
+    margin-top: -20px;
 }
 .astronaut_balloons  {
     width:630px;
@@ -233,8 +234,9 @@ body {
 }
 .saveButton{
     margin-left: 50px;
-    margin-top: 25px;
+    margin-top: 10px;
     width: 150px;
+    height: 30px;
     background-color: #BABFF2;
 }
 .saveButton:active {

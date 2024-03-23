@@ -39,7 +39,11 @@
     <div class="book-overview">
       <div>
         <img style="width: 333px; height: 463px;" th:src="${book.img}">
-        <button type="button" class="saveButton">Save</button>
+        <button th:if="${saved}" class="saveButton" style="background-color: #C9C9C9;" disabled>Saved</button>
+        <form th:unless="${saved}" method="post" action="/save">
+          <input type="hidden" name="openLibId" value="${book.openLibId}">
+          <input type="submit" value="Save" class="saveButton">
+        </form>
       </div>
       <div style="margin-left: 50px;">
         <h2 th:text="${book.title}"></h2>
