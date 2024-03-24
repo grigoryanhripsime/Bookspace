@@ -29,10 +29,20 @@ public class HomePageController {
         String images[] = {"profpic.png", "profpic2.png", "profpic3.png", "profpic4.png", "profpic5.png", "profpic6.png", "profpic7.png", "profpic8.png"};
 
         if (user != null) {
+            //setting user information
             model.addAttribute("user", user);
             model.addAttribute("img", "/img/" + images[user.getImg() - 1]);
-            model.addAttribute("exploreBooks", OpenLibraryScraper.trendingBookScraper(session));
 
+            //the most trending book
+            Book firstTrendingBook = OpenLibraryScraper.detailedBookScrapper("OL21692056W");
+            model.addAttribute("firstTrendingBook", firstTrendingBook);
+            System.out.println(firstTrendingBook);
+
+
+            //explore new trending books
+            model.addAttribute("exploreBooks", OpenLibraryScraper.trendingBookScraper());
+
+            //user library books
             List<String> openLibIds = bookService.getOpenLibIdByUserId(user.getId());
             List<Book> libBooks = new ArrayList<>();;
             for (String openLibId : openLibIds) {

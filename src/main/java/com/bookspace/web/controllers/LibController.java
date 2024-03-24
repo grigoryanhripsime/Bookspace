@@ -29,16 +29,21 @@ public class LibController {
     public String myLib(HttpSession session, Model model)
     {
         User user = (User) session.getAttribute("user");
-        List<String> openLibIds = bookService.getOpenLibIdByUserId(user.getId());
-        List<Book> books = new ArrayList<>();;
-        for (String openLibId : openLibIds) {
-            books.add(OpenLibraryScraper.bookScrapper(openLibId));
+        if (user != null) {
+            List<String> openLibIds = bookService.getOpenLibIdByUserId(user.getId());
+            List<Book> books = new ArrayList<>();
+
+            for (String openLibId : openLibIds) {
+                books.add(OpenLibraryScraper.bookScrapper(openLibId));
+            }
+            String images[] = {"profpic.png", "profpic2.png", "profpic3.png", "profpic4.png", "profpic5.png", "profpic6.png", "profpic7.png", "profpic8.png"};
+            model.addAttribute("user", user);
+            model.addAttribute("img", "/img/" + images[user.getImg() - 1]);
+            model.addAttribute("books", books);
+            return "myLib";
         }
-        String images[] = {"profpic.png", "profpic2.png", "profpic3.png", "profpic4.png", "profpic5.png", "profpic6.png", "profpic7.png", "profpic8.png"};
-        model.addAttribute("user", user);
-        model.addAttribute("img", "/img/" + images[user.getImg() - 1]);
-        model.addAttribute("books", books);
-        return "myLib";
+        else
+            return "error";
     }
     @PostMapping("/save")
     public String save(@RequestParam String openLibId, HttpSession session, Model model)

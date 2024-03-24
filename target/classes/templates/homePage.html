@@ -17,7 +17,7 @@
               <h2 style="text-align: center; margin-bottom: 50px;"  th:text="${user.nickname}"></h2>
               <a href="/homePage" style="text-decoration: none; color: #000000"><h2 class="section">Home page</h2></a>
               <a href="/myLib" style="text-decoration: none; color: #000000"><h2 class="section">My library</h2></a>
-              <a href="/explore" style="text-decoration: none; color: #000000"><h2 class="section">New books</h2></a>
+              <a href="/explore" style="text-decoration: none; color: #000000"><h2 class="section">Trending books</h2></a>
               <div class="dropdown1">
                 <button class="dropbtn1"><h2 class="section" style="margin-top: 0px; margin-bottom: 0px;">Contact Us</h2></button>
                 <div class="dropdown-content1">
@@ -26,7 +26,7 @@
                   <a href="https://www.facebook.com/">Facebook</a>
                 </div>
               </div>
-              <a href="/login" style="text-decoration: none; color: #000000"><h2 class="section" style="margin-top: 200px;">Log Out</h2></a>
+              <a href="/logout" style="text-decoration: none; color: #000000"><h2 class="section" style="margin-top: 200px;">Log Out</h2></a>
             </div>
             <div class="center-div" style="margin-left: 300px;">
               <div class="search-div" style="margin-left: 50px; margin-top: 10px;">
@@ -37,81 +37,67 @@
               </div>
               <h1 style="margin-left: 100px; margin-bottom: 0px;">Book of the day</h1>
               <div class="ads">
-                <img src="/img/Little-women.jpg" style="width: 220px; height: 300px; margin-top: 20px; margin-left: 50px;">
+                <img th:src="${firstTrendingBook.img}" style="width: 220px; height: 300px; margin-top: 20px; margin-left: 50px;">
                 <div class="ads-book" style="margin-left: 30px; width: 650px;">
-                  <h1 style="margin-bottom: 5px;">Little women</h1>
-                  <h2 style="margin-top: 0px;">Louisa May Alcott</h2>
-                  <div class="rating">
-                    <img class="star" src="/img/yellow-star.png">
-                    <img class="star" src="/img/yellow-star.png">
-                    <img class="star" src="/img/yellow-star.png">
-                    <img class="star" src="/img/yellow-star.png">
-                    <img class="star" src="/img/yellow-star.png">
-                  </div>
-                  <p style="width: 500px; word-wrap: break-word; ">Four sisters and their mother, whom they call Marmee, live in a new neighborhood (loosely based on Concord) in Massachusetts in genteel poverty. Having lost all his money, their father is serving as a chaplain for the Union Army in the American Civil War, far from home. The mother and daughters face their first Christmas without him. When Marmee asks her daughters to give their Christmas breakfast away to an impoverished family, the girls and their mother venture into town laden with baskets to feed the hungry children.</p>
-                  <a href="bookDetails.html"><button type="button" class="moreButton" style="margin-top: 0px; margin-left:  200px;">More</button></a>
+                    <h1 th:text="${firstTrendingBook.title}"></h1>
+                    <h4>Authors:
+                        <span th:each="string, iterStat : ${firstTrendingBook.authors}">
+                            <span style="font-size: 18px;" th:text="${string}"></span>
+                            <span th:unless="${iterStat.last}">,</span>
+                        </span>
+                    </h4>
+                    <div class="rating">
+                        <th:block th:if="${firstTrendingBook.rating > 0}" th:each="starIndex : ${#numbers.sequence(1, firstTrendingBook.rating)}">
+                            <img class="star" src="/img/yellow-star.png">
+                        </th:block>
+                        <th:block th:if="${firstTrendingBook.rating < 5}" th:each="starIndex : ${#numbers.sequence(firstTrendingBook.rating + 1, 5)}">
+                            <img class="star" src="/img/gray-star.png">
+                        </th:block>
+                    </div>
+                    <h4 style="width: 550px;">Subjects:
+                        <span th:each="string, iterStat : ${firstTrendingBook.subject}">
+                            <span style="font-size: 18px;" th:text="${string}"></span>
+                            <span th:unless="${iterStat.last}">,</span>
+                        </span>
+                    </h4>
+                    <form method="post" action="/details">
+                        <input type="hidden" name="openLibId" th:value="${firstTrendingBook.openLibId}">
+                        <input type="submit" class="moreButton" value="More">
+                    </form>
                 </div>
               </div>
               <div class="explore">
                 <a style="color: #000000" href="/explore"><h1>Explore new books</h1></a>
                 <div class="books-to-explore" style="display: flex; width: 700px; overflow-wrap: break-word;">
                     <div class="books-to-explore" style="display: flex; width: 700px; overflow-wrap: break-word;">
-                        <div th:each="book, iterStat : ${books}" class="book" style="margin-right: 50px;" th:if="${iterStat.index lt 5}">
+                        <div th:each="book, iterStat : ${exploreBooks}" class="book" style="margin-right: 50px;" th:if="${iterStat.index lt 5}">
                             <img th:src="${book.img}" style="width: 160px; height: 220px;">
                             <h3 th:text="${#strings.length(book.title) > 33 ? #strings.substring(book.title, 0, 30) + '...' : book.title}" style="margin-top: 0px; margin-bottom: 0px; height: 50px; word-wrap: break-word;"></h3>
                             <h4 th:if="${not #lists.isEmpty(book.authors)}" th:text="${#strings.length(book.authors[0]) > 15 ? #strings.substring(book.authors[0], 0, 15) + '...' : book.authors[0]}" style="margin-top: 0px; margin-bottom: 3px;"></h4>
                             <form method="post" action="/details">
-                                <input type="hidden" name="openLibId" th:value="${book.openLibId}"> <!-- Accessing links based on index -->
+                                <input type="hidden" name="openLibId" th:value="${book.openLibId}">
                                 <input type="submit" class="moreButton" value="More">
                             </form>
                         </div>
                     </div>
                 </div>
               </div>
-              <div class="my-lib">
-                <h1>My library</h1>
-                <div class="books-to-explore" style="display: flex; width: 700px; overflow-wrap: break-word;">
-                  <div class="book" style="margin-right: 50px;">
-                    <img src="../static/img/abc_murders.jpg" style="width: 160px; height: 220px;">
-                    <h3 style="margin-top: 0px; margin-bottom: 0px; height: 50px;">The A.B.C. Murders</h3>
-                    <h4 style="margin-top: 0px; margin-bottom: 3px;">Agatha Christie</h4>
-                    <div class="rating">
-                      <img class="star" src="../static/img/yellow-star.png">
-                      <img class="star" src="../static/img/yellow-star.png">
-                      <img class="star" src="../static/img/yellow-star.png">
-                      <img class="star" src="../static/img/yellow-star.png">
-                      <img class="star" src="../static/img/gray-star.png">
+                <div class="explore">
+                    <a style="color: #000000" href="/myLib"><h1>My library</h1></a>
+                    <div class="books-to-explore" style="display: flex; width: 700px; overflow-wrap: break-word;">
+                        <div class="books-to-explore" style="display: flex; width: 700px; overflow-wrap: break-word;">
+                            <div th:each="book, iterStat : ${libBooks}" class="book" style="margin-right: 50px;" th:if="${iterStat.index lt 5}">
+                                <img th:src="${book.img}" style="width: 160px; height: 220px;">
+                                <h3 th:text="${#strings.length(book.title) > 33 ? #strings.substring(book.title, 0, 30) + '...' : book.title}" style="margin-top: 0px; margin-bottom: 0px; height: 50px; word-wrap: break-word;"></h3>
+                                <h4 th:if="${not #lists.isEmpty(book.authors)}" th:text="${#strings.length(book.authors[0]) > 15 ? #strings.substring(book.authors[0], 0, 15) + '...' : book.authors[0]}" style="margin-top: 0px; margin-bottom: 3px;"></h4>
+                                <form method="post" action="/details">
+                                    <input type="hidden" name="openLibId" th:value="${book.openLibId}"> <!-- Accessing links based on index -->
+                                    <input type="submit" class="moreButton" value="More">
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                    <a href="bookDetails.html"><button type="button" class="moreButton">More</button></a>
-                  </div>
-                  <div class="book" style="margin-right: 50px;">
-                    <img src="../static/img/The_Fault_in_Our_Stars.jpg" style="width: 160px; height: 220px;">
-                    <h3 style="margin-top: 0px; margin-bottom: 0px; height: 50px;">Title</h3>
-                    <h4 style="margin-top: 0px; margin-bottom: 3px;">Author</h4>
-                    <div class="rating">
-                      <img class="star" src="../static/img/yellow-star.png">
-                      <img class="star" src="../static/img/yellow-star.png">
-                      <img class="star" src="../static/img/yellow-star.png">
-                      <img class="star" src="../static/img/yellow-star.png">
-                      <img class="star" src="../static/img/gray-star.png">
-                    </div>
-                    <a href="bookDetails.html"><button type="button" class="moreButton">More</button></a>
-                  </div>
-                  <div class="book" style="margin-right: 50px;">
-                    <img src="../static/img/Inferno.jpg" style="width: 160px; height: 220px;">
-                    <h3 style="margin-top: 0px; margin-bottom: 0px; height: 50px;">Inferno</h3>
-                    <h4 style="margin-top: 0px; margin-bottom: 3px;">Dan Brown</h4>
-                    <div class="rating">
-                      <img class="star" src="../static/img/yellow-star.png">
-                      <img class="star" src="../static/img/yellow-star.png">
-                      <img class="star" src="../static/img/yellow-star.png">
-                      <img class="star" src="../static/img/yellow-star.png">
-                      <img class="star" src="../static/img/gray-star.png">
-                    </div>
-                    <a href="bookDetails.html"><button type="button" class="moreButton">More</button></a>
-                  </div>
                 </div>
-              </div>
             </div>
             <div class="dropdown">
                 <button class="dropbtn"><img th:src="${img}" style="width: 50px; height: 50px;"></button>

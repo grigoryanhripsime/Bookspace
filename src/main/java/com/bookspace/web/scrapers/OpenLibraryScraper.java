@@ -1,19 +1,17 @@
 package com.bookspace.web.scrapers;
 
 import com.bookspace.web.models.Book;
-import jakarta.servlet.http.HttpSession;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.ui.Model;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OpenLibraryScraper {
-    public static List<Book> trendingBookScraper(HttpSession session) {
+    public static List<Book> trendingBookScraper() {
         List<Book> books = new ArrayList<>();
 
         try {
@@ -62,7 +60,9 @@ public class OpenLibraryScraper {
 
             //img link
             Element imgElement = doc.select(".bookCover a").first();
-            String img = "https://" + imgElement.attr("href").substring(2);
+            String img = null;
+            if (imgElement != null)
+                img = "https://" + imgElement.attr("href").substring(2);
             book.setImg(img);
 
             //title
@@ -72,31 +72,41 @@ public class OpenLibraryScraper {
 
             //author
             Element authorElement = doc.select(".edition-byline").first();
+            String author = null;
             for (Element authors : authorElement.select("a")) {
-                String author = authors.text();
+                author = authors.text();
                 book.setAuthors(author);
             }
+            book.setAuthors(author);
 
             //pub_date
             Element p_dateElement = doc.select(".edition-omniline-item span").first();
-            String pub_date = p_dateElement.text();
+            String pub_date = null;
+            if (p_dateElement != null)
+                pub_date = p_dateElement.text();
             book.setPub_date(pub_date);
 
             //publisher
             Element pubElement = doc.select(".edition-omniline-item a").first();
-            String publisher = pubElement.text();
+            String publisher = null;
+            if (publisher != null)
+                publisher = pubElement.text();
             book.setPublisher(publisher);
 
             //description
             Element descElement = doc.select(".read-more__content p").first();
-            String description = descElement.text();
+            String description = null;
+            if (descElement != null)
+                description = descElement.text();
             book.setDescription(description);
 
             //subjects
+            String subject = null;
             for (Element subjects : doc.select(".clamp a")) {
-                String subject = subjects.text();
+                subject = subjects.text();
                 book.setSubject(subject);
             }
+            book.setSubject(subject);
 
             //language
             Element langElement = doc.select("span[itemprop=\"inLanguage\"] a").first();
@@ -110,7 +120,8 @@ public class OpenLibraryScraper {
 
             //rating
             Element ratingElement = doc.select(".avg-ratings span[itemprop=ratingValue]").first();
-            book.setRating((int) Float.parseFloat(ratingElement.text()));
+            if (ratingElement != null)
+                book.setRating((int) Float.parseFloat(ratingElement.text()));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -22,7 +22,7 @@ public class ExploreController {
         if (user != null) {
             model.addAttribute("user", user);
             model.addAttribute("img", "/img/" + images[user.getImg() - 1]);
-            model.addAttribute("books", OpenLibraryScraper.trendingBookScraper(session));
+            model.addAttribute("books", OpenLibraryScraper.trendingBookScraper());
             model.addAttribute("link", session.getAttribute("link"));
             return "explore";
         } else {

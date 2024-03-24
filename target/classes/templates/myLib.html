@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>BookSpace</title>
-  <link rel="icon" href="../static/img/icon2.png">
-  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="icon" href="/img/icon2.png">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <div style="display: flex; width: 1510px;" class="main-div">
   <div class="left-fixed-div" style="background-color: #D4DCF8; width: 300px; height: 706px; position: fixed;">
     <div style="display: flex;">
-      <img class="icon1" src="../static/img/icon2.png">
+      <img class="icon1" src="/img/icon2.png">
       <p class="title1">BookSpace</p>
     </div>
-    <img src="../static/img/profpic.png" class="profpic">
-    <h2 style="text-align: center; margin-bottom: 50px;">monster123</h2>
-    <a href="homePage.html" style="text-decoration: none; color: #000000"><h2 class="section">Home page</h2></a>
-    <a href="myLib.html" style="text-decoration: none; color: #000000"><h2 class="section">My library</h2></a>
-    <a href="explore.html" style="text-decoration: none; color: #000000"><h2 class="section">New books</h2></a>
+    <img th:src="${img}" class="profpic">
+    <h2 style="text-align: center; margin-bottom: 50px;" th:text="${user.nickname}"></h2>
+    <a href="/homePage" style="text-decoration: none; color: #000000"><h2 class="section">Home page</h2></a>
+    <a href="/myLib" style="text-decoration: none; color: #000000"><h2 class="section">My library</h2></a>
+    <a href="/explore" style="text-decoration: none; color: #000000"><h2 class="section">New books</h2></a>
     <div class="dropdown1">
       <button class="dropbtn1"><h2 class="section" style="margin-top: 0px; margin-bottom: 0px;">Contact Us</h2></button>
       <div class="dropdown-content1">
@@ -29,118 +29,40 @@
     <a href="logIn.html" style="text-decoration: none; color: #000000"><h2 class="section" style="margin-top: 200px;">Log Out</h2></a>
   </div>
   <div class="center-div" style="margin-left: 300px;">
-    <div class="search-div" style="margin-left: 50px; margin-top: 10px; width: 900px;">
-      <form class="searchform">
+    <div class="search-div" style="margin-left: 50px; margin-top: 10px;">
+      <form class="searchform" method="post" action="\generalSearch">
         <input type="text" name="search" class="search" placeholder="Search">
-        <button type="button" class="searchButton">Let's go</button>
+        <input type="submit" class="searchButton" value="Search">
       </form>
     </div>
-    <div class="my-lib">
+    <div class="explore">
       <h1 style="width: 700px;">My library</h1>
       <div class="books-to-explore" style="width: 1070px; overflow-wrap: break-word;">
-        <div class="book" style="margin-right: 50px;">
-          <img src="../static/img/abc_murders.jpg" style="width: 160px; height: 220px;">
-          <h3 style="margin-top: 0px; margin-bottom: 0px; height: 50px; word-wrap: break-word;">The A.B.C. Murders</h3>
-          <h4 style="margin-top: 0px; margin-bottom: 3px;">Agatha Christie</h4>
-          <div class="rating">
-            <img class="star" src="../static/img/yellow-star.png">
-            <img class="star" src="../static/img/yellow-star.png">
-            <img class="star" src="../static/img/yellow-star.png">
-            <img class="star" src="../static/img/gray-star.png">
-            <img class="star" src="../static/img/gray-star.png">
-          </div>
-          <a href="bookDetails.html"><button type="button" class="moreButton">More</button></a>
-        </div>
-        <div class="book" style="margin-right: 50px;">
-          <img src="../static/img/The_Fault_in_Our_Stars.jpg" style="width: 160px; height: 220px;">
-          <h3 style="margin-top: 0px; margin-bottom: 0px; height: 50px; word-wrap: break-word;">The fault in out stars</h3>
-          <h4 style="margin-top: 0px; margin-bottom: 3px;">John Green</h4>
-          <div class="rating">
-            <img class="star" src="../static/img/yellow-star.png">
-            <img class="star" src="../static/img/yellow-star.png">
-            <img class="star" src="../static/img/yellow-star.png">
-            <img class="star" src="../static/img/yellow-star.png">
-            <img class="star" src="../static/img/gray-star.png">
-          </div>
-          <a href="bookDetails.html"><button type="button" class="moreButton">More</button></a>
-        </div>
-        <div class="book" style="margin-right: 50px;">
-          <img src="../static/img/Inferno.jpg" style="width: 160px; height: 220px;">
-          <h3 style="margin-top: 0px; margin-bottom: 0px; height: 50px;">Inferno</h3>
-          <h4 style="margin-top: 0px; margin-bottom: 3px;">Dan Brown</h4>
-          <div class="rating">
-            <img class="star" src="../static/img/yellow-star.png">
-            <img class="star" src="../static/img/yellow-star.png">
-            <img class="star" src="../static/img/yellow-star.png">
-            <img class="star" src="../static/img/yellow-star.png">
-            <img class="star" src="../static/img/yellow-star.png">
-          </div>
-          <a href="bookDetails.html"><button type="button" class="moreButton">More</button></a>
-        </div>
-        <div class="book" style="margin-right: 50px;">
-          <img src="../static/img/A_Good_Girl's_Guide_to_Murder.jpg" style="width: 160px; height: 220px;">
-          <h3 style="margin-top: 0px; margin-bottom: 0px; height: 50px; word-wrap: break-word;">A Good Girl's Guide to Murder</h3>
-          <h4 style="margin-top: 0px; margin-bottom: 3px;">Holly Jackson</h4>
-          <div class="rating">
-            <img class="star" src="../static/img/yellow-star.png">
-            <img class="star" src="../static/img/yellow-star.png">
-            <img class="star" src="../static/img/gray-star.png">
-            <img class="star" src="../static/img/gray-star.png">
-            <img class="star" src="../static/img/gray-star.png">
-          </div>
-          <a href="bookDetails.html"><button type="button" class="moreButton">More</button></a>
-        </div>
-        <div class="book" style="margin-right: 50px;">
-          <img src="../static/img/The_Inheritance_Games.jpg" style="width: 160px; height: 220px;">
-          <h3 style="margin-top: 0px; margin-bottom: 0px; height: 50px; word-wrap: break-word;">The Inheritance Games</h3>
-          <h4 style="margin-top: 0px; margin-bottom: 3px;">Jennifer Lynn Barnes</h4>
-          <div class="rating">
-            <img class="star" src="../static/img/yellow-star.png">
-            <img class="star" src="../static/img/gray-star.png">
-            <img class="star" src="../static/img/gray-star.png">
-            <img class="star" src="../static/img/gray-star.png">
-            <img class="star" src="../static/img/gray-star.png">
-          </div>
-          <a href="bookDetails.html"><button type="button" class="moreButton">More</button></a>
-        </div>
-        <div class="book" style="margin-right: 50px;">
-          <img src="../static/img/One_of_us_is_lyong.jfif" style="width: 160px; height: 220px;">
-          <h3 style="margin-top: 0px; margin-bottom: 0px; height: 50px; word-wrap: break-word;">One of Us Is Lying</h3>
-          <h4 style="margin-top: 0px; margin-bottom: 3px;">Karen M. McManus</h4>
-          <div class="rating">
-            <img class="star" src="../static/img/yellow-star.png">
-            <img class="star" src="../static/img/yellow-star.png">
-            <img class="star" src="../static/img/yellow-star.png">
-            <img class="star" src="../static/img/yellow-star.png">
-            <img class="star" src="../static/img/yellow-star.png">
-          </div>
-          <a href="bookDetails.html"><button type="button" class="moreButton">More</button></a>
-        </div>
-        <div class="book" style="margin-right: 50px;">
-          <img src="../static/img/Paper_towns.jpg" style="width: 160px; height: 220px;">
-          <h3 style="margin-top: 0px; margin-bottom: 0px; height: 50px; word-wrap: break-word;">Paper towns</h3>
-          <h4 style="margin-top: 0px; margin-bottom: 3px;">John Green</h4>
-          <div class="rating">
-            <img class="star" src="../static/img/yellow-star.png">
-            <img class="star" src="../static/img/yellow-star.png">
-            <img class="star" src="../static/img/yellow-star.png">
-            <img class="star" src="../static/img/yellow-star.png">
-            <img class="star" src="../static/img/yellow-star.png">
-          </div>
-          <a href="bookDetails.html"><button type="button" class="moreButton">More</button></a>
+        <!-- Loop over the list of books -->
+        <div th:each="book : ${books}" class="book" style="margin-right: 50px;">
+          <img th:src="${book.img}" style="width: 160px; height: 220px;">
+          <h3 th:text="${#strings.length(book.title) > 33 ? #strings.substring(book.title, 0, 30) + '...' : book.title}" style="margin-top: 0px; margin-bottom: 0px; height: 50px; word-wrap: break-word;"></h3>
+          <h4 th:if="${not #lists.isEmpty(book.authors)}" th:text="${#strings.length(book.authors[0]) > 15 ? #strings.substring(book.authors[0], 0, 15) + '...' : book.authors[0]}" style="margin-top: 0px; margin-bottom: 3px;"></h4>
+          <form method="post" action="/details">
+            <input type="hidden" name="openLibId" th:value="${book.openLibId}">
+            <input type="submit" class="moreButton" value="More">
+          </form>
+          <form method="post" action="/delete">
+            <input type="hidden" name="openLibId" th:value="${book.openLibId}" />
+            <button type="submit" class="moreButton" style="margin-top: 10px;">Delete</button>
+          </form>
         </div>
       </div>
     </div>
   </div>
-</div>
-<div class="dropdown">
-  <button class="dropbtn"><img src="../static/img/profpic.png" style="width: 50px; height: 50px;"></button>
-  <div class="dropdown-content">
-    <a href="#">Dark mode</a>
-    <a href="myLib.html">Library</a>
-    <a href="logIn.html">Log out</a>
+  <div class="dropdown">
+    <button class="dropbtn"><img th:src="${img}" style="width: 50px; height: 50px;"></button>
+    <div class="dropdown-content">
+      <a href="#">Dark mode</a>
+      <a href="/myLib">Library</a>
+      <a href="/login">Log out</a>
+    </div>
   </div>
-</div>
 </div>
 </body>
 </html>

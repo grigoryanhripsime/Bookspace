@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Page Example</title>
+    <style>
+          /* Styles for the loading page */
+          .loading {
+              display: none; /* Initially hidden */
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white background */
+              z-index: 9999; /* Make sure it's above other content */
+          }
+
+          .loading-content {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              text-align: center;
+          }
+      </style>
+  </head>
+  <body>
+      <!-- Loading page markup -->
+      <div class="loading" id="loading">
+        <div class="loading-content">
+          <h1>Loading...</h1>
+          <!-- You can add a spinner or any other loading animation here -->
+        </div>
+      </div>
+
+      <!-- Your main application content -->
+      <div id="main-content" style="display: none;">
+        <!-- Main content goes here -->
+        <h1>Main Content</h1>
+      </div>
+
+      <script>
+          // Simulate a delay (e.g., API request) for demonstration purposes
+          setTimeout(function() {
+              // Hide the loading page
+              document.getElementById('loading').style.display = 'none';
+              // Show the main content
+              document.getElementById('main-content').style.display = 'block';
+          }, 3000); // Simulate a 3-second delay
+      </script>
+  </body>
+</html>

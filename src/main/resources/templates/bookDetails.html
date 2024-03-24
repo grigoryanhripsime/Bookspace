@@ -47,22 +47,21 @@
       </div>
       <div style="margin-left: 50px;">
         <h2 th:text="${book.title}"></h2>
-        <h2>Authors: </h2>
-        <p>
+        <h2>Authors:
           <span th:each="string, iterStat : ${book.authors}">
-              <span style="font-size: 18px;" th:text="${string}"></span>
-              <span th:unless="${iterStat.last}">,</span>
-          </span>
-        </p>
-        <h2>Publishment date: </h2><p style="margin-top: 5px; font-size: 18px;" th:text="${book.pub_date}"></p>
-        <h2>Publisher: </h2><p style="margin-top: 5px; font-size: 18px;" th:text="${book.publisher}"></p>
-        <h2>Language: </h2><p style="margin-top: 5px; font-size: 18px;" th:text="${book.language}"></p>
-        <h2>Subjects: </h2><p>
-        <span th:each="string, iterStat : ${book.subject}">
             <span style="font-size: 18px;" th:text="${string}"></span>
             <span th:unless="${iterStat.last}">,</span>
-        </span>
-        </p>
+          </span>
+        </h2>
+        <h2>Publishment date: <p style="margin-top: 5px; font-size: 18px;" th:text="${book.pub_date}"></p></h2>
+        <h2>Publisher: <p style="margin-top: 5px; font-size: 18px;" th:text="${book.publisher}"></p></h2>
+        <h2>Language: <p style="margin-top: 5px; font-size: 18px;" th:text="${book.language}"></p></h2>
+        <h2>Subjects:
+          <span th:each="string, iterStat : ${book.subject}">
+            <span style="font-size: 18px;" th:text="${string}"></span>
+            <span th:unless="${iterStat.last}">,</span>
+          </span>
+        </h2>
         <div class="rating">
           <th:block th:if="${book.rating > 0}" th:each="starIndex : ${#numbers.sequence(1, book.rating)}">
             <img class="star" src="/img/yellow-star.png">
@@ -75,8 +74,7 @@
     </div>
     <div class="get" style="display: flex;">
       <div>
-        <h2>Description: </h2>
-        <p style="font-size: 18px;" th:text="${book.description}"></p>
+        <h2>Description: <p style="font-size: 18px;" th:text="${book.description}"></p></h2>
         <h1>How to get the book</h1>
         <div style="display: flex;">
           <div style="margin-right: 50px;">
