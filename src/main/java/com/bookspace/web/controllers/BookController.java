@@ -4,6 +4,7 @@ import com.bookspace.web.models.Book;
 import com.bookspace.web.models.User;
 import com.bookspace.web.repositories.SavedRepository;
 import com.bookspace.web.scrapers.OpenLibraryScraper;
+import com.bookspace.web.services.BookService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,9 @@ public class BookController {
 
     @Autowired
     private SavedRepository savedRepository;
+
+    @Autowired
+    BookService bookService;
 
     @PostMapping("/details")
     public String detailedBook(Model model, HttpSession session, @RequestParam String openLibId)
@@ -33,8 +37,12 @@ public class BookController {
             model.addAttribute("book", book);
 
             boolean recordExists = savedRepository.existsByUserIdAndOpenLibId(user.getId(), openLibId);
-
             model.addAttribute("saved", recordExists);
+
+            AvailabilityController availabilityController = new AvailabilityController(book.getOpenLibId(), bookService);
+            model.addAttribute("amazon", availabilityController.amazonLink());
+            model.addAttribute("goodreads", availabilityController.goodreadsLink());
+            model.addAttribute("libthing", availabilityController.libthingLink());
             return "bookDetails";
         }
         else
@@ -54,6 +62,11 @@ public class BookController {
             model.addAttribute("book", book);
             boolean recordExists = savedRepository.existsByUserIdAndOpenLibId(user.getId(), book.getOpenLibId());
             model.addAttribute("saved", recordExists);
+
+            AvailabilityController availabilityController = new AvailabilityController(book.getOpenLibId(), bookService);
+            model.addAttribute("amazon", availabilityController.amazonLink());
+            model.addAttribute("goodreads", availabilityController.goodreadsLink());
+            model.addAttribute("libthing", availabilityController.libthingLink());
             return "bookDetails";
         }
         else

@@ -77,14 +77,33 @@
         <h2>Description: <p style="font-size: 18px;" th:text="${book.description}"></p></h2>
         <h1>How to get the book</h1>
         <div style="display: flex;">
-          <div style="margin-right: 50px;">
+          <div style="margin-right: 50px;" th:if="${amazon != null}">
             <h3 style="margin-top: 0px;">Available in Amazon</h3>
-            <a href="https://www.amazon.com/Fault-Our-Stars-John-Green/dp/014242417X/ref=tmm_pap_swatch_0?_encoding=UTF8&qid=1699457823&sr=1-1"><button type="button" class="getButton">More</button></a>
+            <a  th:href="${amazon}"><button type="button" class="getButton">More</button></a>
           </div>
-          <div style="margin-right: 50px;">
-            <h3 style="margin-top: 0px;">Available in Audible</h3>
-            <a href="https://www.audible.com/pd/The-Fault-in-Our-Stars-Audiobook/B09VQ572P3?eac_link=QzmGMgxbz4kG&ref=web_search_eac_asin_1&eac_selected_type=asin&eac_selected=B09VQ572P3&qid=NYQ9qi2ODH&eac_id=142-7175245-4625139_NYQ9qi2ODH&sr=1-1"><button type="button" class="getButton">More</button></a>
+          <div style="margin-right: 50px;" th:if="${amazon == null}">
+            <h3 style="margin-top: 0px;">Unavailable in Amazon</h3>
+            <button type="button" class="getButton" disabled>More</button>
           </div>
+
+          <div style="margin-right: 50px;" th:if="${goodreads != null}">
+            <h3 style="margin-top: 0px;">Available in GoodReads</h3>
+            <a  th:href="${goodreads}"><button type="button" class="getButton">More</button></a>
+          </div>
+          <div style="margin-right: 50px;" th:if="${goodreads == null}">
+            <h3 style="margin-top: 0px;">Unavailable in GoodReads</h3>
+            <button type="button" class="getButton" disabled>More</button>
+          </div>
+
+          <div style="margin-right: 50px;" th:if="${libthing != null}">
+            <h3 style="margin-top: 0px;">Available in LibraryThing</h3>
+            <a  th:href="${libthing}"><button type="button" class="getButton">More</button></a>
+          </div>
+          <div style="margin-right: 50px;" th:if="${libthing == null}">
+            <h3 style="margin-top: 0px;">Unavailable in LibraryThing</h3>
+            <button type="button" class="getButton" disabled>More</button>
+          </div>
+
         </div>
         <h2 style="margin-bottom: 0px;">Available in libraries</h2>
         <div style="display: flex;">

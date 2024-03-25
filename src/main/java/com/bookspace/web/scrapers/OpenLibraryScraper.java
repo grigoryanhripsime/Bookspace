@@ -115,9 +115,6 @@ public class OpenLibraryScraper {
                 language = langElement.text();
             book.setLanguage(language);
 
-            //available
-            //This part needs to be done
-
             //rating
             Element ratingElement = doc.select(".avg-ratings span[itemprop=ratingValue]").first();
             if (ratingElement != null)

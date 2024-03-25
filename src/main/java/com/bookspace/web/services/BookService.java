@@ -2,6 +2,9 @@ package com.bookspace.web.services;
 
 import com.bookspace.web.models.Saved;
 import com.bookspace.web.repositories.SavedRepository;
+import com.fasterxml.jackson.core.ObjectCodec;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -99,10 +102,29 @@ public class BookService {
         }
         return (null);
     }
-
     public List<String> getOpenLibIdByUserId(Long user_id)
     {
         List<Saved> books = savedRepository.findByUserId(user_id);
         return books.stream().map(Saved::getOpenLibId).toList();
+    }
+
+    public String getBookByID(String bookId) {
+        String apiUrl = "https://openlibrary.org/search.json?q=" + bookId;
+
+        try {
+            ResponseEntity<String> responseEntity = restTemplate.getForEntity(apiUrl, String.class);
+
+            if (responseEntity.getStatusCode() == HttpStatus.OK) {
+                String jsonResponse = responseEntity.getBody();
+                //System.out.println(jsonResponse); // Print JSON response
+                return (jsonResponse);
+            } else {
+                System.out.println("Error: " + responseEntity.getStatusCode());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error occurred during the request: " + e.getMessage());
+        }
+        return (null);
     }
 }
