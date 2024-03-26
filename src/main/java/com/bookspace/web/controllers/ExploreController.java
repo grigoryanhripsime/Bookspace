@@ -2,8 +2,10 @@ package com.bookspace.web.controllers;
 
 import com.bookspace.web.models.User;
 import com.bookspace.web.models.Book;
+import com.bookspace.web.repositories.DbBookRepository;
 import com.bookspace.web.scrapers.OpenLibraryScraper;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,8 @@ import java.util.List;
 
 @Controller
 public class ExploreController {
+    @Autowired
+    private DbBookRepository dbBookRepository;
     @GetMapping("/explore")
     public String showExplorePage(Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
@@ -22,8 +26,8 @@ public class ExploreController {
         if (user != null) {
             model.addAttribute("user", user);
             model.addAttribute("img", "/img/" + images[user.getImg() - 1]);
-            model.addAttribute("books", OpenLibraryScraper.trendingBookScraper());
-            model.addAttribute("link", session.getAttribute("link"));
+            //explore new trending books
+            model.addAttribute("books", dbBookRepository.findAll());
             return "explore";
         } else {
             return "error";

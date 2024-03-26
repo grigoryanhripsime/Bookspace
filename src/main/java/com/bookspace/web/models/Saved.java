@@ -12,14 +12,9 @@ import lombok.NoArgsConstructor;
 @Table(name = "saved_books")
 public class Saved {
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    @Column(name = "openlibid")
     private String openLibId;
-
-    @Column(name = "user_id")
     private long userId;
 
     public Saved(String openLibId, long userId) {

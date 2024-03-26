@@ -2,6 +2,7 @@ package com.bookspace.web.controllers;
 
 import com.bookspace.web.models.Book;
 import com.bookspace.web.models.User;
+import com.bookspace.web.repositories.DbBookRepository;
 import com.bookspace.web.scrapers.OpenLibraryScraper;
 import com.bookspace.web.services.BookService;
 import jakarta.servlet.http.HttpSession;
@@ -12,19 +13,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Controller
 public class HomePageController {
     @Autowired
     private BookService bookService;
 
+    @Autowired
+    private DbBookRepository dbBookRepository;
+
     @GetMapping("/homePage")
     public String showHomePage(Model model, HttpSession session) {
-
-
-
         User user = (User) session.getAttribute("user");
         String images[] = {"profpic.png", "profpic2.png", "profpic3.png", "profpic4.png", "profpic5.png", "profpic6.png", "profpic7.png", "profpic8.png"};
 
@@ -40,15 +38,10 @@ public class HomePageController {
 
 
             //explore new trending books
-            model.addAttribute("exploreBooks", OpenLibraryScraper.trendingBookScraper());
+            model.addAttribute("exploreBooks", dbBookRepository.findAll());
 
             //user library books
-            List<String> openLibIds = bookService.getOpenLibIdByUserId(user.getId());
-            List<Book> libBooks = new ArrayList<>();;
-            for (String openLibId : openLibIds) {
-                libBooks.add(OpenLibraryScraper.bookScrapper(openLibId));
-            }
-            model.addAttribute("libBooks", libBooks);
+            model.addAttribute("libBooks", dbBookRepository.findByUserId(user.getId()));
             return "homePage";
         } else {
             return "error";

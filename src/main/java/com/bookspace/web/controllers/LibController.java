@@ -3,6 +3,8 @@ package com.bookspace.web.controllers;
 import com.bookspace.web.models.Book;
 import com.bookspace.web.models.Saved;
 import com.bookspace.web.models.User;
+import com.bookspace.web.models.DbBook;
+import com.bookspace.web.repositories.DbBookRepository;
 import com.bookspace.web.repositories.SavedRepository;
 import com.bookspace.web.scrapers.OpenLibraryScraper;
 import com.bookspace.web.services.BookService;
@@ -25,21 +27,19 @@ public class LibController {
     @Autowired
     private SavedRepository savedRepository;
 
+    @Autowired
+    private DbBookRepository dbBookRepository;
+
     @GetMapping("/myLib")
     public String myLib(HttpSession session, Model model)
     {
         User user = (User) session.getAttribute("user");
         if (user != null) {
-            List<String> openLibIds = bookService.getOpenLibIdByUserId(user.getId());
-            List<Book> books = new ArrayList<>();
-
-            for (String openLibId : openLibIds) {
-                books.add(OpenLibraryScraper.bookScrapper(openLibId));
-            }
             String images[] = {"profpic.png", "profpic2.png", "profpic3.png", "profpic4.png", "profpic5.png", "profpic6.png", "profpic7.png", "profpic8.png"};
             model.addAttribute("user", user);
             model.addAttribute("img", "/img/" + images[user.getImg() - 1]);
-            model.addAttribute("books", books);
+            //user library books
+            model.addAttribute("books", dbBookRepository.findByUserId(user.getId()));
             return "myLib";
         }
         else
@@ -50,6 +50,13 @@ public class LibController {
     {
         User user = (User) session.getAttribute("user");
         Book book = (Book) session.getAttribute("book");
+
+        //save in db_books
+        if (!dbBookRepository.existsByOpenLibId(openLibId)) {
+            dbBookRepository.save(new DbBook(book.getOpenLibId(), book.getImg(), book.getTitle(), book.getAuthors().get(0)));
+        }
+
+        //save in saved_books
         savedRepository.save(new Saved(book.getOpenLibId(), user.getId()));
         System.out.println("Book was saved");
         String images[] = {"profpic.png", "profpic2.png", "profpic3.png", "profpic4.png", "profpic5.png", "profpic6.png", "profpic7.png", "profpic8.png"};
