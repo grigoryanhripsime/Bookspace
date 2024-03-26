@@ -17,7 +17,7 @@
               <h2 style="text-align: center; margin-bottom: 50px;"  th:text="${user.nickname}"></h2>
               <a href="/homePage" style="text-decoration: none; color: #000000"><h2 class="section">Home page</h2></a>
               <a href="/myLib" style="text-decoration: none; color: #000000"><h2 class="section">My library</h2></a>
-              <a href="/explore" style="text-decoration: none; color: #000000"><h2 class="section">Trending books</h2></a>
+              <a href="/explore" style="text-decoration: none; color: #000000"><h2 class="section">New books</h2></a>
               <div class="dropdown1">
                 <button class="dropbtn1"><h2 class="section" style="margin-top: 0px; margin-bottom: 0px;">Contact Us</h2></button>
                 <div class="dropdown-content1">
@@ -73,7 +73,7 @@
                         <div th:each="book, iterStat : ${exploreBooks}" class="book" style="margin-right: 50px;" th:if="${iterStat.index lt 5}">
                             <img th:src="${book.img}" style="width: 160px; height: 220px;">
                             <h3 th:text="${#strings.length(book.title) > 33 ? #strings.substring(book.title, 0, 30) + '...' : book.title}" style="margin-top: 0px; margin-bottom: 0px; height: 50px; word-wrap: break-word;"></h3>
-                            <h4 th:if="${not #lists.isEmpty(book.authors)}" th:text="${#strings.length(book.authors[0]) > 15 ? #strings.substring(book.authors[0], 0, 15) + '...' : book.authors[0]}" style="margin-top: 0px; margin-bottom: 3px;"></h4>
+                            <h4 th:text="${#strings.length(book.author) > 15 ? #strings.substring(book.author, 0, 15) + '...' : book.author}" style="margin-top: 0px; margin-bottom: 3px;"></h4>
                             <form method="post" action="/details">
                                 <input type="hidden" name="openLibId" th:value="${book.openLibId}">
                                 <input type="submit" class="moreButton" value="More">
@@ -89,7 +89,7 @@
                             <div th:each="book, iterStat : ${libBooks}" class="book" style="margin-right: 50px;" th:if="${iterStat.index lt 5}">
                                 <img th:src="${book.img}" style="width: 160px; height: 220px;">
                                 <h3 th:text="${#strings.length(book.title) > 33 ? #strings.substring(book.title, 0, 30) + '...' : book.title}" style="margin-top: 0px; margin-bottom: 0px; height: 50px; word-wrap: break-word;"></h3>
-                                <h4 th:if="${not #lists.isEmpty(book.authors)}" th:text="${#strings.length(book.authors[0]) > 15 ? #strings.substring(book.authors[0], 0, 15) + '...' : book.authors[0]}" style="margin-top: 0px; margin-bottom: 3px;"></h4>
+                                <h4 th:text="${#strings.length(book.author) > 15 ? #strings.substring(book.author, 0, 15) + '...' : book.author}" style="margin-top: 0px; margin-bottom: 3px;"></h4>
                                 <form method="post" action="/details">
                                     <input type="hidden" name="openLibId" th:value="${book.openLibId}"> <!-- Accessing links based on index -->
                                     <input type="submit" class="moreButton" value="More">
