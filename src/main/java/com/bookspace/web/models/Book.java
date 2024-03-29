@@ -22,30 +22,13 @@ public class Book {
     private String img;
     private List<String> subject = new ArrayList<>();
     private String language;
-    private List<Availability> available = new ArrayList<>();
     private float rating;
 
-    @AllArgsConstructor
-    class Availability {
-        String shop_name;
-        String link;
-
-        @Override
-        public String toString() {
-            return "Availability{" +
-                    "shop_name='" + shop_name + '\'' +
-                    ", link='" + link + '\'' +
-                    '}';
-        }
-    }
     public void setAuthors(String author) {
         this.authors.add(author);
     }
     public void setSubject(String subject) {
         this.subject.add(subject);
-    }
-    public void setAvailable(String shop_name, String link) {
-        this.available.add(new Availability(shop_name, link));
     }
 }
 

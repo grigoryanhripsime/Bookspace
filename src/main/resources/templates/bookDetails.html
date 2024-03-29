@@ -85,7 +85,6 @@
             <h3 style="margin-top: 0px;">Unavailable in Amazon</h3>
             <button type="button" class="getButton" disabled>More</button>
           </div>
-
           <div style="margin-right: 50px;" th:if="${goodreads != null}">
             <h3 style="margin-top: 0px;">Available in GoodReads</h3>
             <a  th:href="${goodreads}"><button type="button" class="getButton">More</button></a>
@@ -94,7 +93,6 @@
             <h3 style="margin-top: 0px;">Unavailable in GoodReads</h3>
             <button type="button" class="getButton" disabled>More</button>
           </div>
-
           <div style="margin-right: 50px;" th:if="${libthing != null}">
             <h3 style="margin-top: 0px;">Available in LibraryThing</h3>
             <a  th:href="${libthing}"><button type="button" class="getButton">More</button></a>
@@ -103,57 +101,45 @@
             <h3 style="margin-top: 0px;">Unavailable in LibraryThing</h3>
             <button type="button" class="getButton" disabled>More</button>
           </div>
+        </div>
 
-        </div>
-        <h2 style="margin-bottom: 0px;">Available in libraries</h2>
-        <div style="display: flex;">
-          <h4 style="margin-left: 50px; margin-bottom: 5px;">National Children's Library</h4>
-          <h4 style="margin-left: 50px; margin-bottom: 5px;">15 Days Loan</h4>
-        </div>
-        <div style="display: flex;">
-          <h4 style="margin-left: 50px; margin-bottom: 5px;">Tavush Regional Library</h4>
-          <h4 style="margin-left: 50px; margin-bottom: 5px;">10 Days Loan</h4>
-        </div>
+<!--        <h2 style="margin-bottom: 0px;">Available in libraries</h2>-->
+<!--        <div style="display: flex;">-->
+<!--          <h4 style="margin-left: 50px; margin-bottom: 5px;">National Children's Library</h4>-->
+<!--          <h4 style="margin-left: 50px; margin-bottom: 5px;">15 Days Loan</h4>-->
+<!--        </div>-->
+<!--        <div style="display: flex;">-->
+<!--          <h4 style="margin-left: 50px; margin-bottom: 5px;">Tavush Regional Library</h4>-->
+<!--          <h4 style="margin-left: 50px; margin-bottom: 5px;">10 Days Loan</h4>-->
+<!--        </div>-->
+
       </div>
-      <img src="
-      /img/reading.png" style="width: 250px; height: 300px; margin-left: 170px; margin-top: 20px;">
+      <img src="/img/reading.png" style="width: 250px; height: 300px; margin-left: 170px; margin-top: 20px;">
     </div>
-    <div class="reviews">
-      <h1>Reviews</h1>
-      <div style="display: flex; margin-bottom: 30px;">
-        <img src="/img/profpic2.png" style="width: 40px; height: 40px;">
-        <div style="width: 1000px; margin-left: 20px;">
-          <h3 style="margin-top: 5px;">monster456</h3>
-          <p>The Fault in Our Stars by John Green is quite possibly the best standalone novel I have ever read and is certainly the most phenomenal book I’ve had the privilege to experience in the year 2013. It is my third favorite story and favorite non-fantasy novel. The title comes from Shakespeare’s Julius Caesar, and it sets the perfect tone for this story written in the first person by Hazel, a sixteen year old girl in the regressive stage of lung cancer who nevertheless is required to cart around an oxygen tank because (as she so perfectly puts it) her “lungs suck at being lungs.” Her mother forces her to go to a cancer patient/survivor group where she proceeds to exercise her considerable teenage snark and wit along with her friend Isaac who is suffering from a type of cancer that eventually requires the removal of an eye.</p>
-          <div class="rating">
-            <img class="star" src="../static/img/yellow-star.png">
-            <img class="star" src="../static/img/yellow-star.png">
-            <img class="star" src="../static/img/yellow-star.png">
-            <img class="star" src="../static/img/yellow-star.png">
-            <img class="star" src="../static/img/gray-star.png">
+      <div class="reviews" style="margin-bottom: 30px;">
+        <h1>Reviews</h1>
+        <div th:each="comment : ${comments}" style="display: flex; margin-bottom: 30px;">
+          <img th:src="${comment.userImg}" style="width: 40px; height: 40px;">
+          <div style="width: 1000px; margin-left: 20px;">
+            <h3 style="margin-top: 5px;" th:text="${comment.userNickname}"></h3>
+            <p th:text="${comment.comment}"></p>
           </div>
         </div>
-      </div>
-      <div style="display: flex; margin-bottom: 30px;">
-        <img src="/img/profpic3.png" style="width: 40px; height: 40px;">
-        <div style="width: 1000px; margin-left: 20px;">
-          <h3 style="margin-top: 5px;">monster921</h3>
-          <p>I’m not going to promise that you will love or hate this book. This is a book that will catch your attention or make your eyes roll. I truly believe it depends on your personal experience and how you choose to relate the book to your own personal experience.</p>
-          <div class="rating">
-            <img class="star" src="../static/img/yellow-star.png">
-            <img class="star" src="../static/img/yellow-star.png">
-            <img class="star" src="../static/img/yellow-star.png">
-            <img class="star" src="../static/img/gray-star.png">
-            <img class="star" src="../static/img/gray-star.png">
-          </div>
+        <div style="display: flex;">
+          <img th:src="${img}" style="width: 40px; height: 40px;">
+          <h3 style="margin-top: 5px; margin-left: 20px;" th:text="${user.nickname}"></h3>
         </div>
+        <form style="margin-top: 5px;" method="post" action="\addComment">
+          <div style="position:relative;">
+            <textarea name="comment" id="commentInput" style="width: 940px; height: 100px; margin-left: 50px; color: #000; font-size: 16px;"></textarea>
+          </div>
+          <input type="submit" class="saveButton" style="margin-left: 50px; margin-top: 10px;">
+        </form>
       </div>
     </div>
-  </div>
   <div class="dropdown">
     <button class="dropbtn"><img th:src="${img}" style="width: 50px; height: 50px;"></button>
     <div class="dropdown-content">
-      <a href="#">Dark mode</a>
       <a href="/myLib">Library</a>
       <a href="/logIn">Log out</a>
     </div>

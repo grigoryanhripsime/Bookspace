@@ -59,10 +59,10 @@ public class LibController {
         //save in saved_books
         savedRepository.save(new Saved(book.getOpenLibId(), user.getId()));
         System.out.println("Book was saved");
-        String images[] = {"profpic.png", "profpic2.png", "profpic3.png", "profpic4.png", "profpic5.png", "profpic6.png", "profpic7.png", "profpic8.png"};
-        model.addAttribute("user", user);
-        model.addAttribute("img", "/img/" + images[user.getImg() - 1]);
-        model.addAttribute("book", book);
+//        String images[] = {"profpic.png", "profpic2.png", "profpic3.png", "profpic4.png", "profpic5.png", "profpic6.png", "profpic7.png", "profpic8.png"};
+//        model.addAttribute("user", user);
+//        model.addAttribute("img", "/img/" + images[user.getImg() - 1]);
+//        model.addAttribute("book", book);
         return "redirect:/details";
     }
 
