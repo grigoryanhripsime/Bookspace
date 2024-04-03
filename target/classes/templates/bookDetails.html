@@ -26,7 +26,7 @@
         <a href="https://www.facebook.com/">Facebook</a>
       </div>
     </div>
-    <a href="/logIn" style="text-decoration: none; color: #000000"><h2 class="section" style="margin-top: 200px;">Log Out</h2></a>
+    <a href="/logout" style="text-decoration: none; color: #000000"><h2 class="section" style="margin-top: 200px;">Log Out</h2></a>
   </div>
   <div class="center-div" style="margin-left: 300px;">
     <div class="search-div" style="margin-left: 50px; margin-top: 10px;">
@@ -87,7 +87,7 @@
           </div>
           <div style="margin-right: 50px;" th:if="${goodreads != null}">
             <h3 style="margin-top: 0px;">Available in GoodReads</h3>
-            <a  th:href="${goodreads}"><button type="button" class="getButton">More</button></a>
+            <a  th:href="${agoodreads}"><button type="button" class="getButton">More</button></a>
           </div>
           <div style="margin-right: 50px;" th:if="${goodreads == null}">
             <h3 style="margin-top: 0px;">Unavailable in GoodReads</h3>
@@ -141,7 +141,7 @@
     <button class="dropbtn"><img th:src="${img}" style="width: 50px; height: 50px;"></button>
     <div class="dropdown-content">
       <a href="/myLib">Library</a>
-      <a href="/logIn">Log out</a>
+      <a href="/logout">Log out</a>
     </div>
   </div>
   <img src="/img/spacecraft2.png" style="width: 260px; height: 200px; position: absoute; margin-left: -200px; margin-top: 100px;">

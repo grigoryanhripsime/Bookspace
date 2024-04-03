@@ -7,6 +7,7 @@ import com.bookspace.web.scrapers.OpenLibraryScraper;
 import com.bookspace.web.services.BookService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.cdi.Eager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,5 +54,19 @@ public class HomePageController {
         search = search.replace(" ", "+");
         System.out.println("Search by: " + search);
         return "redirect:/search/general?query=" + search;
+    }
+
+    @GetMapping("/")
+    public String generalPage(Model model, HttpSession session)
+    {
+        //the most trending book
+        Book firstTrendingBook = OpenLibraryScraper.detailedBookScrapper("OL21692056W");
+        model.addAttribute("firstTrendingBook", firstTrendingBook);
+        System.out.println(firstTrendingBook);
+
+        //explore new trending books
+        model.addAttribute("exploreBooks", dbBookRepository.findAll());
+
+        return "first";
     }
 }

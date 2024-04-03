@@ -60,9 +60,9 @@ public class BookController {
             model.addAttribute("saved", recordExists);
 
             setAvailable(book);
-            model.addAttribute("amazon", available.get(0));
-            model.addAttribute("goodreads", available.get(1));
-            model.addAttribute("libthing", available.get(2));
+            model.addAttribute("amazon", available.get(0).getLink());
+            model.addAttribute("goodreads", available.get(1).getLink());
+            model.addAttribute("libthing", available.get(2).getLink());
 
             //getting comments for this book
             List<Comment> comments =  commentRepository.findByOpenLibId(book.getOpenLibId());

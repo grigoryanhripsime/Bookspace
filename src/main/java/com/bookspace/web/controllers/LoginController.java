@@ -37,4 +37,12 @@ public class LoginController {
             return "error";
         }
     }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session)
+    {
+        if (session != null)
+            session.invalidate();
+        return "logIn";
+    }
 }
