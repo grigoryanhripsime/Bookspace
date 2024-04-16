@@ -1,5 +1,6 @@
 package com.bookspace.web.controllers;
 
+import com.bookspace.web.models.UCALResults;
 import com.bookspace.web.models.User;
 import com.bookspace.web.models.Book;
 import com.bookspace.web.repositories.DbBookRepository;
@@ -55,12 +56,14 @@ public class ExploreController {
     {
         User user = (User) session.getAttribute("user");
         List<Book> books = (List<Book>) session.getAttribute("books");
+        List<UCALResults> UCALbooks = (List<UCALResults>) session.getAttribute("UCALbooks");
 
         String images[] = {"profpic.png", "profpic2.png", "profpic3.png", "profpic4.png", "profpic5.png", "profpic6.png", "profpic7.png", "profpic8.png"};
         if (user != null) {
             model.addAttribute("user", user);
             model.addAttribute("img", "/img/" + images[user.getImg() - 1]);
             model.addAttribute("books", books);
+            model.addAttribute("UCALbooks", UCALbooks);
             return "searchRes";
         }
         System.out.println("I'm here");

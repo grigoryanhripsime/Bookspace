@@ -7,12 +7,16 @@ import com.bookspace.web.scrapers.OpenLibraryScraper;
 import com.bookspace.web.services.BookService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.cdi.Eager;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 @Controller
 public class HomePageController {
@@ -48,12 +52,18 @@ public class HomePageController {
             return "error";
         }
     }
-    @PostMapping("/generalSearch")
-    public String generalSearch(@RequestParam String search)
-    {
-        search = search.replace(" ", "+");
-        System.out.println("Search by: " + search);
-        return "redirect:/search/general?query=" + search;
+    @PostMapping(value = "/generalSearch", produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
+    public String generalSearch(@RequestParam String search) {
+        try {
+            String encodedSearch = URLEncoder.encode(search, StandardCharsets.UTF_8.toString());
+            String redirectUrl = "/search/general?query=" + encodedSearch;
+            System.out.println("Redirecting to: " + redirectUrl);
+            return "redirect:" + redirectUrl;
+        } catch (UnsupportedEncodingException e) {
+            // Handle encoding exception
+            e.printStackTrace();
+            return "error"; // Or handle the exception according to your application's logic
+        }
     }
 
     @GetMapping("/")

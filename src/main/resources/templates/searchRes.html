@@ -41,7 +41,7 @@
             </form>
         </div>
         <div class="explore">
-            <h1 style="width: 700px;">Explore new books</h1>
+            <h1 style="width: 700px;">Results from Open library</h1>
             <div class="books-to-explore" style="width: 1070px; overflow-wrap: break-word;">
                 <!-- Loop over the list of books -->
                 <div th:each="book : ${books}" class="book" style="margin-right: 50px;">
@@ -60,6 +60,34 @@
                         <input type="hidden" name="openLibId" th:value="${book.openLibId}"> <!-- Accessing links based on index -->
                         <input type="submit" class="moreButton" value="More">
                     </form>
+                </div>
+            </div>
+        </div>
+        <div class="explore">
+            <h1 style="width: 700px;">Results from Union Catalog of Armenian Libraries</h1>
+            <div style="width: 1070px;">
+                <div th:each="book : ${UCALbooks}" style="margin-right: 50px;">
+                    <h3 th:text="${book.title}" style="margin-top: 0px; margin-bottom: 0px;"></h3>
+                    <h4 th:text="${book.author}" style="margin-top: 0px; margin-bottom: 3px;"></h4>
+                    <table border="1">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Phone Number</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="library : ${book.libraries}">
+                            <td th:text="${library.id}"></td>
+                            <td th:text="${library.name}"></td>
+                            <td th:text="${library.address}"></td>
+                            <td th:text="${library.phoneNumber}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <hr>
                 </div>
             </div>
         </div>

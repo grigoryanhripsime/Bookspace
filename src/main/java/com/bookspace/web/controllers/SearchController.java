@@ -1,11 +1,15 @@
 package com.bookspace.web.controllers;
 
 import com.bookspace.web.models.Book;
+import com.bookspace.web.models.UCALResults;
+import com.bookspace.web.repositories.LibrariesRepository;
+import com.bookspace.web.scrapers.UCALScrapper;
 import com.bookspace.web.services.BookService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +22,9 @@ import java.util.List;
 public class SearchController {
     private final BookService bookService;
     private List<Book> books;
+    private List<UCALResults> UCALbooks;
+    @Autowired
+    private LibrariesRepository librariesRepository;
 
 
     @Autowired
@@ -26,23 +33,30 @@ public class SearchController {
     }
 
 
-    @GetMapping("/general")
+    @GetMapping(value = "/general", produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
     private String searchBooksGeneral(String query, HttpSession session) {
         System.out.println("This is search by query, and the query is: " + query);
-        books = new ArrayList<>();
-        String jsonResponse = bookService.getBooksGeneral(query);
+//        books = new ArrayList<>();
+//        String jsonResponse = bookService.getBooksGeneral(query);
+//
+//        // Parse the JSON string into a JSON object
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        try {
+//            JsonNode jsonNode = objectMapper.readTree(jsonResponse);
+//            getBooks(jsonNode);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            System.out.println("Error occurred during JSON parsing: " + e.getMessage());
+//        }
 
-        // Parse the JSON string into a JSON object
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            JsonNode jsonNode = objectMapper.readTree(jsonResponse);
-            getBooks(jsonNode);
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error occurred during JSON parsing: " + e.getMessage());
-        }
+        //search in Union Catalog of Armenian Libraries
+        System.out.println("Search in UCAL");
+        UCALbooks = UCALScrapper.UCALScrapping(query, librariesRepository);
+
+
         System.out.println("Search was ended");
         session.setAttribute("books", books);
+        session.setAttribute("UCALbooks", UCALbooks);
         return "redirect:/searchResults";
     }
 
