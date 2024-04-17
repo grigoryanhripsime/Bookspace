@@ -20,12 +20,12 @@ public class UCALScrapper {
             System.out.println(url);
             Document doc = Jsoup.connect(url).get();
             Elements bookElements = doc.select(".title_summary");
+            List<Libraries> libraries1 = librariesRepository.findAll();
             for (Element element : bookElements) {
                 UCALResults ucalResults = new UCALResults();
                 ucalResults.setTitle(element.select(".title").text());
                 ucalResults.setAuthor(element.select(".author").text());
                 String libraries = element.select(".ItemBranch").text();
-                List<Libraries> libraries1 = librariesRepository.findAll();
                 List<Libraries> toShow = new ArrayList<>();
                 for (Libraries lib : libraries1)
                     if (libraries.contains(lib.getName()))

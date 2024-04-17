@@ -68,25 +68,14 @@
             <div style="width: 1070px;">
                 <div th:each="book : ${UCALbooks}" style="margin-right: 50px;">
                     <h3 th:text="${book.title}" style="margin-top: 0px; margin-bottom: 0px;"></h3>
-                    <h4 th:text="${book.author}" style="margin-top: 0px; margin-bottom: 3px;"></h4>
-                    <table border="1">
-                        <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Address</th>
-                            <th>Phone Number</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="library : ${book.libraries}">
-                            <td th:text="${library.id}"></td>
-                            <td th:text="${library.name}"></td>
-                            <td th:text="${library.address}"></td>
-                            <td th:text="${library.phoneNumber}"></td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <p th:text="${book.author}" style="margin-top: 0px; margin-bottom: 3px;"></p>
+                    <div th:each="library : ${book.libraries}" class="dropdown2">
+                        <h4 th:text="${library.name}"></h4>
+                        <div class="dropdown-content2">
+                            <div style="display: flex;"><h4>Address:  </h4><p style="padding: 0px; margin-top: 22px; margin-left: 3px;" th:text="${library.address}"></p></div>
+                            <div style="display: flex;"><h4 style=" margin-top: 0px;">Number:  </h4><p style="padding: 0px; margin-top: 0px; margin-left: 3px;" th:text="${library.phoneNumber}"></p></div>
+                        </div>
+                    </div>
                     <hr>
                 </div>
             </div>

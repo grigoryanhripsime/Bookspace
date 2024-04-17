@@ -165,7 +165,6 @@ body {
   background-color: #D4DCF8;
   width: 200px;
   border: none;
-
 }
 .dropdown-content1 {
   display: none;
@@ -188,6 +187,40 @@ body {
 .dropdown1:hover .dropdown-content1 {
     display: block;
 }
+
+.dropdown2 {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content2 {
+    display: none;
+    position: absolute;
+    top: calc(100% - 5px);
+    left: 0;
+    height: 100px;
+    width: max-content;
+    background-color: #b5acc2;
+    border: 1px solid #ccc;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropbtn2 {
+  background-color: #D4DCF8;
+  width: 200px;
+  border: none;
+}
+
+.dropdown2:hover .dropdown-content2 {
+    display: block;
+}
+
+
+
 .icon1 {
     width: 120px;
     height: 80px;
