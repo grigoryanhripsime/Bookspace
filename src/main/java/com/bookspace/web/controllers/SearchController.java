@@ -83,7 +83,7 @@ public class SearchController {
         return "redirect:/searchResults";
     }
 
-    @GetMapping("/bySubject")
+    @GetMapping(value = "/bySubject", produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
     private String searchBooksBySubject(String subject, HttpSession session) {
         System.out.println("This is search by subject, and the subject is: " + subject);
 
@@ -132,7 +132,7 @@ public class SearchController {
         return "redirect:/searchResults";
     }
 
-    @GetMapping("/byAuthor")
+    @GetMapping(value = "/byAuthor", produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
     private String searchBooksByAuthor(String author, HttpSession session) {
 
         Runnable apiRunnable = () -> {
@@ -181,7 +181,7 @@ public class SearchController {
         return "redirect:/searchResults";
     }
 
-    @GetMapping("/byTitle")
+    @GetMapping(value = "/byTitle", produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
     private String searchBooksByTitle(String title, HttpSession session) {
 
         Runnable apiRunnable = () -> {

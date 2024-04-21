@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Controller
@@ -40,15 +43,24 @@ public class ExploreController {
         System.out.println("Selecttion: " + selection);
         System.out.println("Search: " + search);
 
-        search = search.replace(" ", "+");
-        System.out.println(search);
-        if (selection.equals("Title"))
-            return "redirect:/search/byTitle?title=" + search;
-        if (selection.equals("Author"))
-            return "redirect:/search/byAuthor?author=" + search;
-        if (selection.equals("Genre"))
-            return "redirect:/search/bySubject?subject=" + search;
-        return "error";
+        try {
+            String encodedSearch = URLEncoder.encode(search, StandardCharsets.UTF_8.toString());
+            String redirectUrl = "/search/general?query=" + encodedSearch;
+            System.out.println("Redirecting to: " + redirectUrl);
+            search = search.replace(" ", "+");
+            System.out.println(search);
+            if (selection.equals("Title"))
+                return "redirect:/search/byTitle?title=" + search;
+            if (selection.equals("Author"))
+                return "redirect:/search/byAuthor?author=" + search;
+            if (selection.equals("Genre"))
+                return "redirect:/search/bySubject?subject=" + search;
+            return "redirect:" + redirectUrl;
+        } catch (UnsupportedEncodingException e) {
+            // Handle encoding exception
+            e.printStackTrace();
+            return "error"; // Or handle the exception according to your application's logic
+        }
     }
 
     @GetMapping("/searchResults")
