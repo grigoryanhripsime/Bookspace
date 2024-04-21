@@ -36,23 +36,46 @@ public class SearchController {
     @GetMapping(value = "/general", produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
     private String searchBooksGeneral(String query, HttpSession session) {
         System.out.println("This is search by query, and the query is: " + query);
-//        books = new ArrayList<>();
-//        String jsonResponse = bookService.getBooksGeneral(query);
-//
-//        // Parse the JSON string into a JSON object
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        try {
-//            JsonNode jsonNode = objectMapper.readTree(jsonResponse);
-//            getBooks(jsonNode);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            System.out.println("Error occurred during JSON parsing: " + e.getMessage());
-//        }
 
-        //search in Union Catalog of Armenian Libraries
-        System.out.println("Search in UCAL");
-        UCALbooks = UCALScrapper.UCALScrapping(query, librariesRepository);
+        Runnable apiRunnable = () -> {
+            System.out.println("API data fetching started");
+            books = new ArrayList<>();
+            String jsonResponse = bookService.getBooksGeneral(query);
 
+            // Parse the JSON string into a JSON object
+            ObjectMapper objectMapper = new ObjectMapper();
+            try {
+                JsonNode jsonNode = objectMapper.readTree(jsonResponse);
+                getBooks(jsonNode);
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Error occurred during JSON parsing: " + e.getMessage());
+            }
+        };
+
+        Runnable webScrapingRunnable = () -> {
+            System.out.println("Web scraping started");
+            //search in Union Catalog of Armenian Libraries
+            System.out.println("Search in UCAL");
+            UCALbooks = UCALScrapper.UCALScrapping(query, librariesRepository);
+        };
+
+        // Create and start threads for each operation
+        Thread apiThread = new Thread(apiRunnable);
+        Thread webScrapingThread = new Thread(webScrapingRunnable);
+
+        apiThread.start();
+        webScrapingThread.start();
+
+        // Wait for both threads to finish
+        try {
+            apiThread.join();
+            webScrapingThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Both threads have finished executing");
 
         System.out.println("Search was ended");
         session.setAttribute("books", books);
@@ -63,18 +86,47 @@ public class SearchController {
     @GetMapping("/bySubject")
     private String searchBooksBySubject(String subject, HttpSession session) {
         System.out.println("This is search by subject, and the subject is: " + subject);
-        books = new ArrayList<>();
-        String jsonResponse = bookService.getBooksBySubject(subject);
 
-        // Parse the JSON string into a JSON object
-        ObjectMapper objectMapper = new ObjectMapper();
+        Runnable apiRunnable = () -> {
+            System.out.println("API data fetching started");
+            books = new ArrayList<>();
+            String jsonResponse = bookService.getBooksBySubject(subject);
+
+            // Parse the JSON string into a JSON object
+            ObjectMapper objectMapper = new ObjectMapper();
+            try {
+                JsonNode jsonNode = objectMapper.readTree(jsonResponse);
+                getBooks(jsonNode);
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Error occurred during JSON parsing: " + e.getMessage());
+            }
+        };
+
+        Runnable webScrapingRunnable = () -> {
+            System.out.println("Web scraping started");
+            //search in Union Catalog of Armenian Libraries
+            System.out.println("Search in UCAL");
+            UCALbooks = UCALScrapper.UCALScrapping(subject, librariesRepository);
+        };
+
+        // Create and start threads for each operation
+        Thread apiThread = new Thread(apiRunnable);
+        Thread webScrapingThread = new Thread(webScrapingRunnable);
+
+        apiThread.start();
+        webScrapingThread.start();
+
+        // Wait for both threads to finish
         try {
-            JsonNode jsonNode = objectMapper.readTree(jsonResponse);
-            getBooks(jsonNode);
-        } catch (Exception e) {
+            apiThread.join();
+            webScrapingThread.join();
+        } catch (InterruptedException e) {
             e.printStackTrace();
-            System.out.println("Error occurred during JSON parsing: " + e.getMessage());
         }
+
+        System.out.println("Both threads have finished executing");
+
         System.out.println("Search was ended");
         session.setAttribute("books", books);
         return "redirect:/searchResults";
@@ -82,19 +134,48 @@ public class SearchController {
 
     @GetMapping("/byAuthor")
     private String searchBooksByAuthor(String author, HttpSession session) {
-        books = new ArrayList<>();
-        System.out.println("This is search by author, and the author is: " + author);
-        String jsonResponse = bookService.getBooksByAuthor(author);
 
-        // Parse the JSON string into a JSON object
-        ObjectMapper objectMapper = new ObjectMapper();
+        Runnable apiRunnable = () -> {
+            System.out.println("API data fetching started");
+            books = new ArrayList<>();
+            System.out.println("This is search by author, and the author is: " + author);
+            String jsonResponse = bookService.getBooksByAuthor(author);
+
+            // Parse the JSON string into a JSON object
+            ObjectMapper objectMapper = new ObjectMapper();
+            try {
+                JsonNode jsonNode = objectMapper.readTree(jsonResponse);
+                getBooks(jsonNode);
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Error occurred during JSON parsing: " + e.getMessage());
+            }
+        };
+
+        Runnable webScrapingRunnable = () -> {
+            System.out.println("Web scraping started");
+            //search in Union Catalog of Armenian Libraries
+            System.out.println("Search in UCAL");
+            UCALbooks = UCALScrapper.UCALScrapping(author, librariesRepository);
+        };
+
+        // Create and start threads for each operation
+        Thread apiThread = new Thread(apiRunnable);
+        Thread webScrapingThread = new Thread(webScrapingRunnable);
+
+        apiThread.start();
+        webScrapingThread.start();
+
+        // Wait for both threads to finish
         try {
-            JsonNode jsonNode = objectMapper.readTree(jsonResponse);
-            getBooks(jsonNode);
-        } catch (Exception e) {
+            apiThread.join();
+            webScrapingThread.join();
+        } catch (InterruptedException e) {
             e.printStackTrace();
-            System.out.println("Error occurred during JSON parsing: " + e.getMessage());
         }
+
+        System.out.println("Both threads have finished executing");
+
         System.out.println("Search was ended");
         session.setAttribute("books", books);
         return "redirect:/searchResults";
@@ -102,19 +183,48 @@ public class SearchController {
 
     @GetMapping("/byTitle")
     private String searchBooksByTitle(String title, HttpSession session) {
-        books = new ArrayList<>();
-        System.out.println("This is search by title, and the title is: " + title);
-        String jsonResponse = bookService.getBooksByTitle(title);
 
-        // Parse the JSON string into a JSON object
-        ObjectMapper objectMapper = new ObjectMapper();
+        Runnable apiRunnable = () -> {
+            System.out.println("API data fetching started");
+            books = new ArrayList<>();
+            System.out.println("This is search by title, and the title is: " + title);
+            String jsonResponse = bookService.getBooksByTitle(title);
+
+            // Parse the JSON string into a JSON object
+            ObjectMapper objectMapper = new ObjectMapper();
+            try {
+                JsonNode jsonNode = objectMapper.readTree(jsonResponse);
+                getBooks(jsonNode);
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Error occurred during JSON parsing: " + e.getMessage());
+            }
+        };
+
+        Runnable webScrapingRunnable = () -> {
+            System.out.println("Web scraping started");
+            //search in Union Catalog of Armenian Libraries
+            System.out.println("Search in UCAL");
+            UCALbooks = UCALScrapper.UCALScrapping(title, librariesRepository);
+        };
+
+        // Create and start threads for each operation
+        Thread apiThread = new Thread(apiRunnable);
+        Thread webScrapingThread = new Thread(webScrapingRunnable);
+
+        apiThread.start();
+        webScrapingThread.start();
+
+        // Wait for both threads to finish
         try {
-            JsonNode jsonNode = objectMapper.readTree(jsonResponse);
-            getBooks(jsonNode);
-        } catch (Exception e) {
+            apiThread.join();
+            webScrapingThread.join();
+        } catch (InterruptedException e) {
             e.printStackTrace();
-            System.out.println("Error occurred during JSON parsing: " + e.getMessage());
         }
+
+        System.out.println("Both threads have finished executing");
+
         System.out.println("Search was ended");
         session.setAttribute("books", books);
         return "redirect:/searchResults";
