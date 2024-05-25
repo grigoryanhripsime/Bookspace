@@ -2,9 +2,6 @@ package com.bookspace.web.services;
 
 import com.bookspace.web.models.Saved;
 import com.bookspace.web.repositories.SavedRepository;
-import com.fasterxml.jackson.core.ObjectCodec;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -25,6 +22,7 @@ public class BookService {
 
     public String getBooksGeneral(String query) {
         String apiUrl = "https://openlibrary.org/search.json?limit=20&q=" + query;
+        System.out.println(apiUrl);
 
         try {
             ResponseEntity<String> responseEntity = restTemplate.getForEntity(apiUrl, String.class);

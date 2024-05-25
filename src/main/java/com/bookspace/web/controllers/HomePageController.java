@@ -37,7 +37,7 @@ public class HomePageController {
             model.addAttribute("img", "/img/" + images[user.getImg() - 1]);
 
             //the most trending book
-            Book firstTrendingBook = OpenLibraryScraper.detailedBookScrapper("OL21692056W");
+            Book firstTrendingBook = OpenLibraryScraper.detailedBookScrapper("OL4781294W");
             model.addAttribute("firstTrendingBook", firstTrendingBook);
             System.out.println(firstTrendingBook);
 

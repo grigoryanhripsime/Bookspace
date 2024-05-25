@@ -36,7 +36,7 @@
                 </form>
               </div>
               <h1 style="margin-left: 100px; margin-bottom: 0px;">Book of the day</h1>
-              <div class="ads">
+              <div class="ads" style="margin-top: 30px;">
                 <img th:src="${firstTrendingBook.img}" style="width: 220px; height: 300px; margin-top: 20px; margin-left: 50px;">
                 <div class="ads-book" style="margin-left: 30px; width: 650px;">
                     <h1 th:text="${firstTrendingBook.title}"></h1>
@@ -66,8 +66,8 @@
                     </form>
                 </div>
               </div>
-              <div class="explore">
-                <a style="color: #000000" href="/explore"><h1>Trending books</h1></a>
+              <div class="explore" style="margin-top: 230px;">
+                <a style="color: #000000;" href="/explore"><h1>Trending books</h1></a>
                 <div class="books-to-explore" style="display: flex; width: 700px; overflow-wrap: break-word;">
                     <div class="books-to-explore" style="display: flex; width: 700px; overflow-wrap: break-word;">
                         <div th:each="book, iterStat : ${exploreBooks}" class="book" style="margin-right: 50px;" th:if="${iterStat.index lt 5}">

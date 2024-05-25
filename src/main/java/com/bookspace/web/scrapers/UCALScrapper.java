@@ -7,7 +7,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,9 @@ public class UCALScrapper {
         try {
             String url = "https://armunicat.nla.am/cgi-bin/koha/opac-search.pl?q=" + query + "&weight_search=1";
             System.out.println(url);
-            Document doc = Jsoup.connect(url).get();
+
+            Document doc = Jsoup.connect(url).timeout(100000).get();
+
             Elements bookElements = doc.select(".title_summary");
             List<Libraries> libraries1 = librariesRepository.findAll();
             for (Element element : bookElements) {
