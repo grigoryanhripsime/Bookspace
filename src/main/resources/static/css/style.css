@@ -187,12 +187,10 @@ body {
 .dropdown1:hover .dropdown-content1 {
     display: block;
 }
-
 .dropdown2 {
     position: relative;
     display: inline-block;
 }
-
 .dropdown-content2 {
     display: none;
     position: absolute;
@@ -208,19 +206,14 @@ body {
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
-
 .dropbtn2 {
   background-color: #D4DCF8;
   width: 200px;
   border: none;
 }
-
 .dropdown2:hover .dropdown-content2 {
     display: block;
 }
-
-
-
 .icon1 {
     width: 120px;
     height: 80px;

@@ -37,10 +37,18 @@ public class HomePageController {
             model.addAttribute("img", "/img/" + images[user.getImg() - 1]);
 
             //the most trending book
-            Book firstTrendingBook = OpenLibraryScraper.detailedBookScrapper("OL4781294W");
-            model.addAttribute("firstTrendingBook", firstTrendingBook);
-            System.out.println(firstTrendingBook);
+//            Book firstTrendingBook = OpenLibraryScraper.detailedBookScrapper("OL4781294W");
+//            model.addAttribute("firstTrendingBook", firstTrendingBook);
+//            System.out.println(firstTrendingBook);
 
+            Book firstTrendingBook = new Book();
+            firstTrendingBook.setOpenLibId("OL4781294W");
+            firstTrendingBook.setTitle("Introduction to Algorithms");
+            firstTrendingBook.setAuthors("Thomas H. Cormen , Charles E. Leiserson , Ronald L. Rivest , Clifford Stein , Clifford Stein");
+            firstTrendingBook.setImg("/img/trending_book.jpg");
+            firstTrendingBook.setSubject("Subjects: Algorithms , Computer algorithms , Computer programming , open_syllabus_project , Programming , Algorithmes , Programmation (Informatique) , 54.10 theoretical informatics , Algorithmus , Informatik , Theoretische Informatik , Algorithmentheorie , COMPUTER PROGRAMS , PROGRAMMING LANGUAGES , FILE MAINTENANCE (COMPUTERS) , SOFTWARE TOOLS , Long Now Manual for Civilization , COMPUTERS , Open Source , Software Development & Engineering , Tools , General , Algorithmische Programmierung , Algoritmen , Datenstruktur , Datoralgoritmer , Datastrukturer , Компьютеры//Алгоритмы и структуры данных , Компьютеры , Алгоритмы и структуры данных , Algorithms and Data Structures , Qa76.6 .c662 2009 , 005.1 , 54.10 , Qa76.6 .i5858 2001 , Qa76.6 .i5858 2001");
+            firstTrendingBook.setRating(4);
+            model.addAttribute("firstTrendingBook", firstTrendingBook);
 
             //explore new trending books
             model.addAttribute("exploreBooks", dbBookRepository.findAll());

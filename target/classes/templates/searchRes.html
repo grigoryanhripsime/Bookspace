@@ -11,7 +11,7 @@
     <div class="left-fixed-div" style="background-color: #D4DCF8; width: 300px; height: 706px; position: fixed;">
         <div style="display: flex;">
             <img class="icon1" src="/img/icon2.png">
-            <p class="title1">BookSpace</p>
+            <a href="/homePage" style="text-decoration: none; color: #000000"><p class="title1">BookSpace</p></a>
         </div>
         <img th:src="${img}" class="profpic">
         <h2 style="text-align: center; margin-bottom: 50px;" th:text="${user.nickname}"></h2>
@@ -29,17 +29,6 @@
         <a href="/logout" style="text-decoration: none; color: #000000"><h2 class="section" style="margin-top: 200px;">Log Out</h2></a>
     </div>
     <div class="center-div" style="margin-left: 300px;">
-        <div class="search-div" style="margin-left: 50px; margin-top: 10px; width: 900px;">
-            <form class="searchform" method="post" action="/explore">
-                <select name="selection" id="selection">
-                    <option value="Genre">Genre</option>
-                    <option value="Author">Author</option>
-                    <option value="Title" selected>Title</option>
-                </select>
-                <input type="text" name="search" class="search" placeholder="Search">
-                <input type="submit" class="searchButton" value="Search">
-            </form>
-        </div>
         <div class="explore">
             <h1 style="width: 700px;">Results from Open library</h1>
             <div class="books-to-explore" style="width: 1070px; overflow-wrap: break-word;">

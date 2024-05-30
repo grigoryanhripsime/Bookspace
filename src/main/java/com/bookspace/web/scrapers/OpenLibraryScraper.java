@@ -53,7 +53,7 @@ public class OpenLibraryScraper {
         Book book = new Book();
         try {
             String url = "https://openlibrary.org/works/" + openLibId;
-            Document doc = Jsoup.connect(url).get();
+            Document doc = Jsoup.connect(url).timeout(100000).get();
 
             //openLibId
             book.setOpenLibId(openLibId);
